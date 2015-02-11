@@ -123,6 +123,8 @@ int tr_tab(int tab[], int *size){ //CHANGER NOM FCTION
 void move_in_tab(grid g, bool inverse, bool retourne){
   int i;
   int j;
+  int size = 0;
+  int tab[GRID_SIDE];
   for(int x=0;x<GRID_SIDE;x++){
     size=0;
     for(int y=0;y<GRID_SIDE;y++)
@@ -143,10 +145,10 @@ void move_in_tab(grid g, bool inverse, bool retourne){
       {
 	g->score+=tr_tab(tab,&size);
 	i=x;
-	j=y;
+	//j=y;
 	if(inverse)
 	  {
-	    i=y;
+	    //i=y;
 	    j=x;
 	  }
 	for(int y=0;y<GRID_SIDE;y++)
@@ -162,11 +164,11 @@ void move_in_tab(grid g, bool inverse, bool retourne){
       {
 	inverser_tableau(tab,&size);
 	g->score+=tr_tab(tab,&size);
-	i=y;
+	//i=y;
 	j=x;
 	if(inverse)
 	  {
-	    i=y;
+	    //i=y;
 	    j=x;
 	  }
 	for(int y=GRID_SIDE-1;y>=0;y--)
