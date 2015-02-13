@@ -8,8 +8,3 @@
 (_)___(_)( )_( )(_) (_) (_)(__)__    (_)___(_)(_)_(_)(__)__ (_)   
  (_____)  (__)_)(_) (_) (_) (____)    (_____)   (_)   (____)(_)   
                                                                   
-                                                                  
-Finalement, on ne peut git push qu'avec le protocole http, te filerai une clé ssh publique
-aujourd'hui psk le ssh c'est plus pratique que rentrer ses logins... ^^
-Oh et faudra parler ensemble de comment on ouvre ce dépôt à Bonichon et si on passe par un
-dépôt au cremi ou pas. :D
