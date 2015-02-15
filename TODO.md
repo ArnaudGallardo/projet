@@ -1,4 +1,8 @@
 # To do
+
+## General
+- [ ] Create a MakeLists.txt (once the project is getting bigger), 15-02-2015 (T)
+
 ## Grid
 - [ ] Reduce code duplication @grid.c, 12-02-2015, (A)
 - [ ] Add documentation @grid.c, 12-02-2015, (A)
