@@ -1,29 +1,26 @@
-CC = gcc
-CFLAGS = -g -std=c99 -Wall
-CPPFLAGS = -I ../../../include
-LDFLAGS = -L ../../../lib -lm -lncurses
-SOURCES = $(wildcard *.c)
-VPATH = ../../../include
-OUTFILES = main test-grid
+CC= gcc
 
-all: $(OUTFILES)
+CFLAGS= -g -Wall
+CPPFLAGS= -I ../include
+LDFLAGS= -lm -L ../lib -lgrid
+VPATH = ../include
+OBJ= main.o
 
-main: main.o grid.o
-	${CC} main.o grid.o ${LDFLAGS} -o main
+main : $(OBJ)
+	$(CC) $(OBJ) $(LDFLAGS) -o $@
 
-test-grid: grid.o
-	${CC} grid.o ${LDFLAGS} -o test-grid
+main.o: main.c grid.h
 
-include files.txt
-files.txt: $(SOURCES)
-	gcc -MM $(CPPFLAGS) *.c > files.txt
+clean :
+	$(MAKE) -C grid clean
+	rm -f main.o main
 
-.PHONY: clean
-clean:
-	-rm -f *.o $(OUTFILES)
+install:
+	$(MAKE) -C grid install
+	cp main ../bin/
 
 test:
-	./test-grid
+	$(MAKE) -C grid test
 
-run:
-	./main
+
+
