@@ -1,8 +1,8 @@
 CC= gcc
 
-CFLAGS= -g -Wall
+CFLAGS= -g -Wall -std=c99
 CPPFLAGS= -I ../include
-LDFLAGS= -lm -L ../lib -lgrid
+LDFLAGS= -lm -L ../lib -lgrid -lncurses
 VPATH = ../include
 OBJ= main.o
 
@@ -17,6 +17,7 @@ clean :
 
 install:
 	$(MAKE) -C grid install
+	mkdir ../bin/ -p
 	cp main ../bin/
 
 test:
