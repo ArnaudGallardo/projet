@@ -1,4 +1,5 @@
 install:
+	$(MAKE) -C src/grid
 	$(MAKE) -C src
 	$(MAKE) -C src install
 clean:
