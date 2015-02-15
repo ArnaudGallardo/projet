@@ -55,6 +55,12 @@ grid new_grid ();
 void delete_grid (grid g);
 
 /**
+ * \brief Draw the grid with printf
+ * \param g the grid to draw
+ */
+void draw_grid (grid g);
+
+/**
  * \brief Clone the grid
  * \param src the grid to copy
  * \param dst the copied grid
