@@ -9,6 +9,7 @@ struct grid_s {
   unsigned int **tuiles;
 };
 
+
 void move_in_tab(grid , bool, bool);
 
 grid new_grid(){
@@ -33,6 +34,7 @@ void delete_grid(grid g){
 }
 
 void draw_grid(grid g){
+  printf("-------------\n");
   for(int y=0;y<GRID_SIDE;y++) {
     for(int x=0;x<GRID_SIDE;x++){
       printf("%i",g->tuiles[y][x]);

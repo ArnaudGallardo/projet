@@ -1,0 +1,2 @@
+grid.o: grid.c grid.h
+test-grid.o: test-grid.c grid.h
