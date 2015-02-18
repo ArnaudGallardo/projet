@@ -4,6 +4,7 @@
 - [ ] Create a MakeLists.txt (once the project is getting bigger), 15-02-2015 (B)
 
 ## Grid
+- [x] Create a test file for grid @test-grid.c, 15-02-2015 (A)
 - [ ] Reduce code duplication @grid.c, 12-02-2015, (A)
 - [ ] Add documentation @grid.c, 12-02-2015, (A)
 
