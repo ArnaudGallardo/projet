@@ -7,9 +7,10 @@ VPATH = ../../include
 OUTFILES = test-grid
 
 all: $(OUTFILES)
+	$(MAKE) -C . install
 
 test-grid: test-grid.o grid.o
-	${CC} test-grid.o grid.o ${LDFLAGS} -o test-grid
+	${CC} test-grid.o grid.o grid.h -lm -o test-grid
 
 include files.txt
 files.txt: $(SOURCES)

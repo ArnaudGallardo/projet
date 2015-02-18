@@ -109,6 +109,27 @@ int tr_tab(int tab[], int *size){ //CHANGER NOM FCTION
   return score;
 }
 
+void grid_to_tab(grid g, int tab[], int *size, int x)
+{
+  for(int y=0;y<GRID_SIDE;y++){
+    if(get_tile(g,x,y)!=0){
+      tab[*size]=get_tile(g,x,y);
+      *size+=1;
+    }
+  }
+}
+
+void inverser_tab(int tab[], int *size)
+{
+  int tmp;
+  for(int i=0;i<*size;i++)
+    {
+      tmp = tab[i];
+      tab[i]=tab[*size-i];
+      tab[*size-i]=tmp;
+    }
+}
+
 void do_move(grid g, dir d){ //GERER DUPLICATION DE CODE !! <3
   int size = 0;
   int tab[GRID_SIDE];
