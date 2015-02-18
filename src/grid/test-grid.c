@@ -22,6 +22,10 @@ void result(bool result)
   color("0");
 }
 
+/**
+ * \brief Check the equality of two grids.
+ * \return true if equals, false if not equals
+ */
 bool equals(grid g1, grid g2)
 {
   bool res = true;
