@@ -47,6 +47,7 @@ void copy_grid(grid src, grid dst){
       dst->tuiles[y][x]=src->tuiles[y][x];
     }
   }
+  dst->score=src->score;
 }
 
 unsigned long int grid_score(grid g){
