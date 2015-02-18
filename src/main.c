@@ -40,10 +40,10 @@ int main(int argc, char *argv[])
 	cbreak();
 	keypad(stdscr, TRUE);
 	curs_set(0);
-	//height = 9;
-	//width = 17;
-	height=12;
-	width=24;
+	height = 9;
+	width = 17;
+	//height=12;
+	//width=24;
 	starty = (LINES - height) / 2;
 	startx = (COLS - width) / 2;
 	printw("Press F2 to exit");

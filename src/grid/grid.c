@@ -110,9 +110,15 @@ int tr_tab(int tab[], int *size){ //CHANGER NOM FCTION
   return score;
 }
 
-void grid_to_tab(grid g, int tab[], int *size, int x)
+void grid_to_tab(grid g, int tab[], int *size, int x, bool inverse)
 {
+  int tmp;
   for(int y=0;y<GRID_SIDE;y++){
+    if(inverse){
+      tmp = x;
+      x = y;
+      y = tmp;
+    }
     if(get_tile(g,x,y)!=0){
       tab[*size]=get_tile(g,x,y);
       *size+=1;
@@ -131,13 +137,31 @@ void inverser_tab(int tab[], int *size)
     }
 }
 
+void tab_to_grid(grid g, int tab[], int *size, int x, bool inverse)
+{
+  int tmp;
+  for(int y=0;y<GRID_SIDE;y++){
+    if(inverse){
+      tmp = x;
+      x = y;
+      y = tmp;
+    }
+    else
+      tmp=y;
+    if(y<*size)
+      set_tile(g,x,y,tab[tmp]);
+    else
+      set_tile(g,x,y,0);
+  }
+}
+
 void do_move(grid g, dir d){ //GERER DUPLICATION DE CODE !! <3
   int size = 0;
   int tab[GRID_SIDE];
   if(can_move(g,d)) {
     switch(d)
       {
-      case UP:
+	/*case UP:
         for(int x=0;x<GRID_SIDE;x++){
 	  size=0;
 	  for(int y=0;y<GRID_SIDE;y++){
@@ -156,7 +180,24 @@ void do_move(grid g, dir d){ //GERER DUPLICATION DE CODE !! <3
 	  }
 	}
 	break;
+	*/
+      case UP:
+	for(int x=0;x<GRID_SIDE;x++){
+	  size=0;
+	  grid_to_tab(g,tab,&size,x,false);
+	  g->score+=tr_tab(tab,&size);
+	  tab_to_grid(g,tab,&size,x,false);
+	}
+	break;
       case LEFT:
+	for(int x=0;x<GRID_SIDE;x++){
+	  size=0;
+	  grid_to_tab(g,tab,&size,x,true);
+	  g->score+=tr_tab(tab,&size);
+	  tab_to_grid(g,tab,&size,x,true);
+	}
+	break;
+	/*case LEFT:
         for(int y=0;y<GRID_SIDE;y++){
 	  size=0;
 	  for(int x=0;x<GRID_SIDE;x++){
@@ -173,7 +214,7 @@ void do_move(grid g, dir d){ //GERER DUPLICATION DE CODE !! <3
 	      set_tile(g,x,y,0);
 	  }
 	}
-	break;
+	break;*/
       case DOWN:
         for(int x=0;x<GRID_SIDE;x++){
 	  size=0;
