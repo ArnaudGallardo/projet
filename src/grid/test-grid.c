@@ -62,20 +62,29 @@ int main(int argc, char *argv[]) {
   ok = can_move(g,UP) && can_move(g,DOWN) && can_move(g,RIGHT) && can_move(g,LEFT)  && !(can_move(f,UP)) && !(can_move(f,LEFT)) && can_move(f,RIGHT) && can_move(f,DOWN);
   resultat(ok);
 
+  printf("Test do_move :\t\t");
+  do_move(g,UP);
+  ok = !(can_move(g,UP)) && can_move(g,DOWN) && can_move(g,RIGHT) && can_move(g,LEFT);
+  do_move(g,LEFT);
+  ok = ok && (!(can_move(g,UP)) && can_move(g,DOWN) && can_move(g,RIGHT) && !(can_move(g,LEFT)));
+  resultat(ok);
+  
   printf("Test add_tile :\t\t");
   ok = true;
-  set_tile(g,GRID_SIDE/2,GRID_SIDE/2,0);
+  grid h = new_grid();
   for(int i=0;i<GRID_SIDE*GRID_SIDE;i++)
-    add_tile(g);
+    add_tile(h);
   for(int i=0;i<GRID_SIDE;i++)
     {
       for(int j=0;j<GRID_SIDE;j++)
 	{
-	  if(get_tile(g,i,j)==0)
+	  if(get_tile(h,i,j)==0)
 	    ok = false;
 	}
     }
   resultat(ok);
   
   delete_grid(g);
+  delete_grid(f);
+  delete_grid(h);
 }
