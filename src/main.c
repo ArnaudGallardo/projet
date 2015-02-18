@@ -35,12 +35,15 @@ int main(int argc, char *argv[])
 	init_pair(7, COLOR_RED, COLOR_BLACK);
 	init_pair(8, COLOR_RED, COLOR_WHITE);
 	init_pair(9, COLOR_RED, COLOR_YELLOW);
+	init_pair(10, COLOR_RED, COLOR_GREEN);
 
 	cbreak();
 	keypad(stdscr, TRUE);
 	curs_set(0);
-	height = 9;
-	width = 17;
+	//height = 9;
+	//width = 17;
+	height=12;
+	width=24;
 	starty = (LINES - height) / 2;
 	startx = (COLS - width) / 2;
 	printw("Press F2 to exit");
@@ -92,6 +95,8 @@ int main(int argc, char *argv[])
 void test(grid g)
 {
   add_tile(g);
+  set_tile(g,0,0,9);
+  set_tile(g,1,0,9);
 }
 
 void update_score(grid g,int starty,int startx)

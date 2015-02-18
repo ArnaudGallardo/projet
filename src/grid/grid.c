@@ -9,9 +9,6 @@ struct grid_s {
   unsigned int **tuiles;
 };
 
-
-void move_in_tab(grid , bool, bool);
-
 grid new_grid(){
   grid the_grid = malloc(sizeof(struct grid_s));
   the_grid->score = 0;
@@ -96,16 +93,6 @@ bool game_over(grid g){
   return (!can_move(g,UP) && !can_move(g,DOWN) && !can_move(g,LEFT) && !can_move(g,RIGHT));
 }
 
- void inverser_tableau(int tab[], int *size)
-{
-  int tmp;
-  for(int i=0;i<*size/2;i++)
-    {
-      tmp = tab[i];
-      tab[i]=tab[*size-1-i];
-    }
-}
-
 int tr_tab(int tab[], int *size){ //CHANGER NOM FCTION
   //printf("test:%i\n",tab[0]);
   int score=0;
@@ -120,70 +107,6 @@ int tr_tab(int tab[], int *size){ //CHANGER NOM FCTION
     }
   }
   return score;
-}
-
-void move_in_tab(grid g, bool inverse, bool retourne){
-  int i;
-  int j;
-  int size = 0;
-  int tab[GRID_SIDE];
-  for(int x=0;x<GRID_SIDE;x++){
-    size=0;
-    for(int y=0;y<GRID_SIDE;y++)
-      {
-	i=x;
-	j=y;
-	if(inverse)
-	  {
-	    i=y;
-	    j=x;
-	  }
-	if(get_tile(g,i,j)!=0){
-	  tab[size]=get_tile(g,i,j);
-	  size+=1;
-	}
-    }
-    if(!retourne)
-      {
-	g->score+=tr_tab(tab,&size);
-	i=x;
-	//j=y;
-	if(inverse)
-	  {
-	    //i=y;
-	    j=x;
-	  }
-	for(int y=0;y<GRID_SIDE;y++)
-	  {
-	    //printf("CTRL:x=%i|y=%i|size=%i|tab=%i\n",x,y,size,tab[y]);
-	    if(j<size)
-	      set_tile(g,i,j,tab[j]);
-	    else
-	      set_tile(g,i,j,0);
-	  }
-      }
-    else
-      {
-	inverser_tableau(tab,&size);
-	g->score+=tr_tab(tab,&size);
-	//i=y;
-	j=x;
-	if(inverse)
-	  {
-	    //i=y;
-	    j=x;
-	  }
-	for(int y=GRID_SIDE-1;y>=0;y--)
-	  {//x->y || y->x
-	    if(GRID_SIDE-y-1<size) //x->y || y->x
-	      set_tile(g,y,x,tab[GRID_SIDE-y-1]); //x->y || y->x
-	    else
-	      set_tile(g,y,x,0);
-	  }
-      }
-
-
-  }
 }
 
 void do_move(grid g, dir d){ //GERER DUPLICATION DE CODE !! <3
