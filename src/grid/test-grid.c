@@ -1,6 +1,8 @@
 #include "grid.h"
 #include <stdio.h>
 #include <stdbool.h>
+#include <stdlib.h>
+#include <time.h>
 
 #define couleur(param) printf("\033[%sm",param)
 
@@ -8,11 +10,11 @@ void resultat(bool result)
 {
   if(result){
     couleur("32");
-    printf("OK\n");
+    printf("OK");
   }
   else {
     couleur("31");
-    printf("KO\n");
+    printf("KO");
   }
   couleur("0");
 }
@@ -40,7 +42,7 @@ int main(int argc, char *argv[]) {
   couleur("0");
   bool ok = true;
   
-  printf("Test new_grid :\t\t");
+  printf("\nTest new_grid :\t\t");
   grid g = new_grid();
   for(int i=0;i<GRID_SIDE;i++)
     {
@@ -52,7 +54,7 @@ int main(int argc, char *argv[]) {
     }
   resultat(ok);
 
-  printf("Test copy_grid :\t");
+  printf("\nTest copy_grid :\t");
   set_tile(g,GRID_SIDE/2,GRID_SIDE/2,5);
   set_tile(g,GRID_SIDE/2,(GRID_SIDE/2)-1,5);
   do_move(g,UP);
@@ -62,7 +64,7 @@ int main(int argc, char *argv[]) {
   delete_grid(g);
   delete_grid(f);
 
-  printf("Test can_move :\t\t");
+  printf("\nTest can_move :\t\t");
   f = new_grid();
   set_tile(f,0,0,2);
   g = new_grid();
@@ -70,14 +72,14 @@ int main(int argc, char *argv[]) {
   ok = can_move(g,UP) && can_move(g,DOWN) && can_move(g,RIGHT) && can_move(g,LEFT)  && !(can_move(f,UP)) && !(can_move(f,LEFT)) && can_move(f,RIGHT) && can_move(f,DOWN);
   resultat(ok);
 
-  printf("Test do_move :\t\t");
+  printf("\nTest do_move :\t\t");
   do_move(g,UP);
   ok = !(can_move(g,UP)) && can_move(g,DOWN) && can_move(g,RIGHT) && can_move(g,LEFT);
   do_move(g,LEFT);
   ok = ok && (!(can_move(g,UP)) && can_move(g,DOWN) && can_move(g,RIGHT) && !(can_move(g,LEFT)));
   resultat(ok);
   
-  printf("Test add_tile :\t\t");
+  printf("\nTest add_tile :\t\t");
   ok = true;
   grid h = new_grid();
   for(int i=0;i<GRID_SIDE*GRID_SIDE;i++)
@@ -93,7 +95,7 @@ int main(int argc, char *argv[]) {
   resultat(ok);
   delete_grid(h);
   
-  printf("Test proba 2 ou 4 :\t");
+  printf("\nTest proba 2 ou 4 :\t");
   int deux = 0;
   int quatre = 0;
   h = new_grid();
@@ -117,6 +119,36 @@ int main(int argc, char *argv[]) {
   else
     ok = false;
   resultat(ok);
+  printf("\t(%d : %d)",deux,quatre);
+
+  printf("\nTest proba position :\t");
+  int c1 = 0;
+  int c2 = 0;
+  int c3 = 0;
+  h = new_grid();
+  for(int i=0;i<GRID_SIDE;i++){
+    for(int j=0;j<GRID_SIDE;j++)
+      set_tile(h,i,j,2);
+  }
+  for(int k=0;k<10000;k++)
+    {
+      set_tile(h,2,3,0);
+      set_tile(h,3,1,0);
+      set_tile(h,3,3,0);
+      add_tile(h);
+      if(get_tile(h,2,3)!=0)
+	c1+=1;
+      else if(get_tile(h,3,1)!=0)
+	c2+=1;
+      else if(get_tile(h,3,3)!=0)
+	c3+=1;
+    }
+  int i = 100;
+  ok = c1<3333+i && c1>3333-i;
+  ok = ok && c2<3333+i && c2>3333-i;
+  ok = ok && c3<3333+i && c3>3333-i;
+  resultat(ok);
+  printf("\t(%d : %d : %d)\n",c1,c2,c3);
   
   delete_grid(g);
   delete_grid(f);
