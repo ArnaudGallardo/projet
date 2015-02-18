@@ -99,7 +99,7 @@ int main(int argc, char *argv[]) {
   int deux = 0;
   int quatre = 0;
   h = new_grid();
-  for(int i=0;i<10000;i++)
+  for(int i=0;i<100000;i++)
     {
     add_tile(h);
     for(int i=0;i<GRID_SIDE;i++)
@@ -114,12 +114,14 @@ int main(int argc, char *argv[]) {
 	  }
       }
     }
-  if(deux<9050 && deux > 8950)
+  deux/=1000;
+  quatre/=1000;
+  if(deux<=91 && deux>=89)
     ok = true;
   else
     ok = false;
   resultat(ok);
-  printf("\t(%d : %d)",deux,quatre);
+  printf("\t(%d%% : %d%%)",deux,100-deux);
 
   printf("\nTest proba position :\t");
   int c1 = 0;
@@ -130,7 +132,7 @@ int main(int argc, char *argv[]) {
     for(int j=0;j<GRID_SIDE;j++)
       set_tile(h,i,j,2);
   }
-  for(int k=0;k<10000;k++)
+  for(int k=0;k<100000;k++)
     {
       set_tile(h,2,3,0);
       set_tile(h,3,1,0);
@@ -143,12 +145,15 @@ int main(int argc, char *argv[]) {
       else if(get_tile(h,3,3)!=0)
 	c3+=1;
     }
-  int i = 100;
-  ok = c1<3333+i && c1>3333-i;
-  ok = ok && c2<3333+i && c2>3333-i;
-  ok = ok && c3<3333+i && c3>3333-i;
+  int i = 1;
+  c1/=1000;
+  c2/=1000;
+  c3/=1000;
+  ok = c1<=33+i && c1>=33-i;
+  ok = ok && c2<=33+i && c2>=33-i;
+  ok = ok && c3<=33+i && c3>=33-i;
   resultat(ok);
-  printf("\t(%d : %d : %d)\n",c1,c2,c3);
+  printf("\t(%d%% : %d%% : %d%%)\n",c1,c2,c3);
   
   delete_grid(g);
   delete_grid(f);
