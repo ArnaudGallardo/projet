@@ -1,7 +1,9 @@
-# projet 2048 + solver
+# Project : 2048 + AI 
 Edd L2 groupe E
 
-___Membres du groupe :___
+University of Bordeaux
+
+___Group members :___
 
 * Timothé Daubasse
 * Arnaud-Marie Gallardo
@@ -9,6 +11,8 @@ ___Membres du groupe :___
 
 ___Compilation :___
 
->gcc -std=c99 -Wall -g -c main.c grid.c grid.h
+>make
 
->gcc main.o grid.o -lm -lncurses -o main
+>make run
+
+>make test
