@@ -5,11 +5,17 @@
 
 ## Grid
 - [x] Create a test file for grid @test-grid.c, 15-02-2015 (A)
-- [ ] Reduce code duplication @grid.c, 12-02-2015, (A)
-- [ ] Add documentation @grid.c, 12-02-2015, (A)
+- [x] Reduce code duplication @grid.c, 12-02-2015, (A)
+- [x] Add documentation @grid.c, 12-02-2015, (A)
+- [ ] Finalize (names, variables, doc...) @grid.c, 23-02-2015, (B)
+- [ ] Ask for additional functions @grid.h, 23-02-2015, (B)
+
+## Strategy
+- [ ] Create a strategy @strategy.c @strategy.h, 23-02-2015, (A)
+
 
 ## Draw
-- [ ] Make an universal library @draw.h, 12-02-2015, (B)
-- [ ] Extract ncurses functions from @main.c into @ncurse.c, 12-02-2015, (B)
-- [ ] Create functions for drawing into terminal in @terminal.c, 12-02-2015, (B)
+- [ ] Make an universal library @draw.h, 12-02-2015, (A)
+- [ ] Extract ncurses functions from @main.c into @ncurse.c, 12-02-2015, (A)
+- [ ] Create functions for drawing into terminal in @terminal.c, 12-02-2015, (A)
 - [ ] Create functions for sdl windows into @sdl.c, 12-02-2015, (B)

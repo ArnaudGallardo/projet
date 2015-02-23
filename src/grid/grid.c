@@ -110,147 +110,87 @@ int tr_tab(int tab[], int *size){ //CHANGER NOM FCTION
   return score;
 }
 
-void grid_to_tab(grid g, int tab[], int *size, int x, bool inverse)
+void grid_to_tab(grid g, int tab[], int *size, int x, bool inverser, bool horizontal)
 {
-  int tmp;
+  *size=0;
+  int tmp = x;
   for(int y=0;y<GRID_SIDE;y++){
-    if(inverse){
-      tmp = x;
-      x = y;
-      y = tmp;
-    }
+    if(horizontal)
+      {
+	x = y;
+	y = tmp;
+      }
     if(get_tile(g,x,y)!=0){
       tab[*size]=get_tile(g,x,y);
       *size+=1;
     }
+    if(horizontal)
+      y=x;
   }
+  if(inverser)
+    inverser_tab(tab, size);
 }
 
 void inverser_tab(int tab[], int *size)
 {
   int tmp;
-  for(int i=0;i<*size;i++)
+  for(int i=0;i<*size/2;i++)
     {
       tmp = tab[i];
-      tab[i]=tab[*size-i];
-      tab[*size-i]=tmp;
+      tab[i]=tab[*size-i-1];
+      tab[*size-i-1]=tmp;
     }
 }
 
-void tab_to_grid(grid g, int tab[], int *size, int x, bool inverse)
+/**
+ * \brief Copy an line array into a grid line
+ * \param g the grid
+ * \param tab the line array
+ * \param size the size of the line array
+ * \param x the position of the line in the grid
+ */
+void tab_to_grid(grid g, int tab[], int *size, int x, bool inverser, bool horizontal)
 {
-  int tmp;
+  int tmp = x;
+  int tp;
   for(int y=0;y<GRID_SIDE;y++){
-    if(inverse){
-      tmp = x;
-      x = y;
-      y = tmp;
-    }
+    tp = y;
+    if(horizontal)
+      {
+	x = y;
+	y = tmp;
+      }
+    if(inverser)
+      {
+	if(tp<GRID_SIDE-(*size))
+	  set_tile(g,x,y,0);
+	else
+	  set_tile(g,x,y,tab[GRID_SIDE-tp-1]);
+      }
     else
-      tmp=y;
-    if(y<*size)
-      set_tile(g,x,y,tab[tmp]);
-    else
-      set_tile(g,x,y,0);
+      {
+	if(tp<*size)
+	  set_tile(g,x,y,tab[tp]);
+	else
+	  set_tile(g,x,y,0);
+      }
+    if(horizontal)
+      y=x;
   }
 }
 
-void do_move(grid g, dir d){ //GERER DUPLICATION DE CODE !! <3
+void do_move(grid g, dir d){ 
   int size = 0;
   int tab[GRID_SIDE];
   if(can_move(g,d)) {
-    switch(d)
+    for(int x=0;x<GRID_SIDE;x++)
       {
-	/*case UP:
-        for(int x=0;x<GRID_SIDE;x++){
-	  size=0;
-	  for(int y=0;y<GRID_SIDE;y++){
-	    if(get_tile(g,x,y)!=0){
-	      tab[size]=get_tile(g,x,y);
-	      size+=1;
-	    }
-	  }
-	  g->score+=tr_tab(tab,&size);
-	  for(int y=0;y<GRID_SIDE;y++){
-	    //printf("CTRL:x=%i|y=%i|size=%i|tab=%i\n",x,y,size,tab[y]);
-	    if(y<size)
-	      set_tile(g,x,y,tab[y]);
-	    else
-	      set_tile(g,x,y,0);
-	  }
-	}
-	break;
-	*/
-      case UP:
-	for(int x=0;x<GRID_SIDE;x++){
-	  size=0;
-	  grid_to_tab(g,tab,&size,x,false);
-	  g->score+=tr_tab(tab,&size);
-	  tab_to_grid(g,tab,&size,x,false);
-	}
-	break;
-      case LEFT:
-	for(int x=0;x<GRID_SIDE;x++){
-	  size=0;
-	  grid_to_tab(g,tab,&size,x,true);
-	  g->score+=tr_tab(tab,&size);
-	  tab_to_grid(g,tab,&size,x,true);
-	}
-	break;
-	/*case LEFT:
-        for(int y=0;y<GRID_SIDE;y++){
-	  size=0;
-	  for(int x=0;x<GRID_SIDE;x++){
-	    if(get_tile(g,x,y)!=0){
-	      tab[size]=get_tile(g,x,y);
-	      size+=1;
-	    }
-	  }
-	  g->score+=tr_tab(tab,&size);
-	  for(int x=0;x<GRID_SIDE;x++){
-	    if(x<size) //A MODIFIER
-	      set_tile(g,x,y,tab[x]); //ICI AUSSI
-	    else
-	      set_tile(g,x,y,0);
-	  }
-	}
-	break;*/
-      case DOWN:
-        for(int x=0;x<GRID_SIDE;x++){
-	  size=0;
-	  for(int y=GRID_SIDE-1;y>=0;y--){
-	    if(get_tile(g,x,y)!=0){
-	      tab[size]=get_tile(g,x,y);
-	      size+=1;
-	    }
-	  }
-	  g->score+=tr_tab(tab,&size);
-	  for(int y=GRID_SIDE-1;y>=0;y--){
-	    if(GRID_SIDE-y-1<size) //A MODIFIER
-	      set_tile(g,x,y,tab[GRID_SIDE-y-1]); //ICI AUSSI
-	    else
-	      set_tile(g,x,y,0);
-	  }
-	}
-	break;
-      case RIGHT:
-        for(int y=0;y<GRID_SIDE;y++){//x->y || y->x
-	  size=0;
-	  for(int x=GRID_SIDE-1;x>=0;x--){//x->y || y->x
-	    if(get_tile(g,x,y)!=0){
-	      tab[size]=get_tile(g,x,y);
-	      size+=1;
-	    }
-	  }
-	  g->score+=tr_tab(tab,&size);
-	  for(int x=GRID_SIDE-1;x>=0;x--){//x->y || y->x
-	    if(GRID_SIDE-x-1<size) //x->y || y->x
-	      set_tile(g,x,y,tab[GRID_SIDE-x-1]); //x->y || y->x
-	    else
-	      set_tile(g,x,y,0);
-	  }
-	}
-	break;
+	//Voir doc fonctions
+	//d>=2 <=> d==DOWN || d==RIGHT
+	//d%2 <=> d==LEFT || d==RIGHT
+	grid_to_tab(g,tab,&size,x,(d>=2),(d%2));
+	g->score+=tr_tab(tab,&size);
+	tab_to_grid(g,tab,&size,x,(d>=2),(d%2));
       }
   }
 }

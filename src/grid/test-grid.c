@@ -22,6 +22,13 @@ void result(bool result)
   color("0");
 }
 
+void title(char* title)
+{
+  color("35");
+  printf("\n%s",title);
+  color("0");
+}
+
 /**
  * \brief Check the equality of two grids.
  * \return true if equals, false if not equals
@@ -49,6 +56,8 @@ int main(int argc, char *argv[]) {
   color("0");
   bool ok = true;
   
+  title("General functions :");
+
   printf("\nTest new_grid :\t\t");
   grid g = new_grid();
   for(int i=0;i<GRID_SIDE;i++)
@@ -106,6 +115,8 @@ int main(int argc, char *argv[]) {
   result(ok);
   delete_grid(h);
   
+  title("Probability functions :");
+
   printf("\nTest proba 2 ou 4 :\t");
   int two = 0;
   int four = 0;
@@ -168,6 +179,66 @@ int main(int argc, char *argv[]) {
   if(!ok)
     printf("\t(%d%% : %d%% : %d%%)",c1,c2,c3);
  
+  title("Personal functions :");
+
+  printf("\nTest inverser_tab :\t");
+  int tableau[GRID_SIDE];
+  for(int i=0;i<GRID_SIDE;i++){
+    tableau[i]=i;
+  }
+  i=GRID_SIDE;
+  ok=true;
+  inverser_tab(tableau,&i);
+  for(int j=0;j<GRID_SIDE;j++)
+    {
+      if(tableau[j]!=GRID_SIDE-j-1)
+	ok=false;
+    }
+  result(ok);
+
+  printf("\nTest grid->tab :\t");
+  set_tile(h,0,3,3);
+  set_tile(h,2,3,0);
+  set_tile(h,3,3,1);
+  ok=true;
+  grid_to_tab(h,tableau,&i,3,false,true);
+  i=0;
+  for(int j=0;j<GRID_SIDE;j++)
+    {
+      if(get_tile(h,j,3)!=0)
+	{
+	  if(get_tile(h,j,3)!=tableau[i])
+	    ok=false;
+	  i++;
+	}
+    }
+  result(ok);
+
+  printf("\nTest tri_tab :\t\t");
+  tr_tab(tableau,&i);
+  ok = true;
+  for(int j=0;j<i;j++)
+    {
+      if(tableau[j]!=i-j)
+	ok=false;
+    }
+  result(ok);
+
+  printf("\nTest tab->grid :\t");
+  ok = true;
+  tab_to_grid(h,tableau,&i,3,false,true);
+  i=0;
+  for(int j=0;j<GRID_SIDE;j++)
+    {
+      if(get_tile(h,j,3)!=0)
+	{
+	  if(get_tile(h,j,3)!=tableau[i])
+	    ok=false;
+	  i++;
+	}
+    }
+  result(ok);
+
   delete_grid(g);
   delete_grid(f);
   delete_grid(h);

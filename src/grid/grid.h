@@ -132,4 +132,8 @@ void add_tile (grid g);
  */
 void play (grid g, dir d);
 
+void inverser_tab(int tab[], int *size);
+void grid_to_tab(grid g, int tab[], int *size, int x, bool inverser,bool horizontal);
+int tr_tab(int tab[], int *size);
+void tab_to_grid(grid g, int tab[], int *size, int x, bool inverser, bool horizontal);
 #endif
