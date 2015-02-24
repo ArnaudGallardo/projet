@@ -36,14 +36,15 @@ int main(int argc, char *argv[])
 	init_pair(8, COLOR_RED, COLOR_WHITE);
 	init_pair(9, COLOR_RED, COLOR_YELLOW);
 	init_pair(10, COLOR_RED, COLOR_GREEN);
+	init_pair(11, COLOR_RED, COLOR_CYAN);
 
 	cbreak();
 	keypad(stdscr, TRUE);
 	curs_set(0);
-	height = 9;
-	width = 17;
-	//height=12;
-	//width=24;
+	height = 2*GRID_SIDE + 1;
+	width = 5*GRID_SIDE + 1;
+	//height=9;
+	//width=17;
 	starty = (LINES - height) / 2;
 	startx = (COLS - width) / 2;
 	printw("Press F2 to exit");
@@ -108,14 +109,14 @@ WINDOW *create_newwin(int height, int width, int starty, int startx)
 
 	local_win = newwin(height, width, starty, startx);
 	box(local_win, 0 , 0); 
-	for(int i=4;i<width-1;i+=4) {
+	for(int i=5;i<width-1;i+=5) {
 	  mvwvline(local_win,1,i,'|',height-2);
 	}
 	for(int i=2;i<height-1;i+=2){
 	  mvwhline(local_win,i,1,'-',width-2);
 	}
 	for(int row=2;row<height-1;row+=2){
-	  for(int col=4;col<width-1;col+=4)
+	  for(int col=5;col<width-1;col+=5)
 	    mvwaddch(local_win,row,col,'+');
 	}
 	wmove(local_win,0,0);
@@ -131,11 +132,11 @@ tile convert_tuile(tile t){
 void draw_grid_win(grid g, WINDOW *local_win)
 {
   int yp=1;
-  int xp=2;
+  int xp;
   for(int y=0;y<GRID_SIDE;y++) {
     xp=2;
     for(int x=0;x<GRID_SIDE;x++){
-      mvwprintw(local_win,yp,xp-1,"   ");
+      mvwprintw(local_win,yp,xp-1,"    ");
       if(get_tile(g,x,y)!=0)
 	{
 	  wattron(local_win,COLOR_PAIR(get_tile(g,x,y)));
@@ -146,13 +147,15 @@ void draw_grid_win(grid g, WINDOW *local_win)
 	      n/=10;             /* n=n/10 */
 	      ++c;
 	    }
-	  if (c==3)
+	  if (c==4)
 	    mvwprintw(local_win,yp,xp-1,"%d",convert_tuile(get_tile(g,x,y)));
+	  else if (c==3)
+	    mvwprintw(local_win,yp,xp,"%d",convert_tuile(get_tile(g,x,y)));
 	  else
 	    mvwprintw(local_win,yp,xp,"%d",convert_tuile(get_tile(g,x,y)));
 	  wattroff(local_win,COLOR_PAIR(get_tile(g,x,y)));
 	}
-      xp+=4;
+      xp+=5;
     }
     yp+=2;
   }
@@ -177,7 +180,7 @@ void draw_game_over(grid g)
   int alea;
   int c;
   FILE *file;
-  file = fopen("test.txt", "r");
+  file = fopen("./src/test.txt", "r");
   if (file) {
     while ((c = getc(file)) != EOF)
       {	  
@@ -192,7 +195,6 @@ void draw_game_over(grid g)
 
   }
   char pseudo[3];
-  int i=0;
   printw("Pseudo : ");
   pseudo[0]='A';
   pseudo[1]='A';

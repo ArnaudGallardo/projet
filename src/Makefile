@@ -18,7 +18,7 @@ clean :
 install:
 	$(MAKE) -C grid install
 	mkdir ../bin/ -p
-	cp main ../bin/
+	mv main ../bin/
 
 test:
 	$(MAKE) -C grid test

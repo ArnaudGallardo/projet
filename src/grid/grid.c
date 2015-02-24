@@ -94,8 +94,10 @@ bool game_over(grid g){
   return (!can_move(g,UP) && !can_move(g,DOWN) && !can_move(g,LEFT) && !can_move(g,RIGHT));
 }
 
+/**
+ * \brief Compute the new line array
+ */
 int tr_tab(int tab[], int *size){ //CHANGER NOM FCTION
-  //printf("test:%i\n",tab[0]);
   int score=0;
   for(int i=1;i<*size;i++){
     if(tab[i-1]==tab[i]) {
@@ -110,6 +112,13 @@ int tr_tab(int tab[], int *size){ //CHANGER NOM FCTION
   return score;
 }
 
+/**
+ * \brief Transform a grid line into an usable line array
+ * \param g the grid to use
+ * \param tab the line array
+ * \param size the size of the line array
+ * \param x one of the position parameter
+ */
 void grid_to_tab(grid g, int tab[], int *size, int x, bool inverser, bool horizontal)
 {
   *size=0;
@@ -131,6 +140,11 @@ void grid_to_tab(grid g, int tab[], int *size, int x, bool inverser, bool horizo
     inverser_tab(tab, size);
 }
 
+/**
+ * \brief Reverse an array
+ * \param tab the array to reverse
+ * \param size the size of the array
+ */
 void inverser_tab(int tab[], int *size)
 {
   int tmp;
