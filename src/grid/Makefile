@@ -9,8 +9,8 @@ OUTFILES = test-grid
 all: $(OUTFILES)
 	$(MAKE) -C . install
 
-test-grid: test-grid.o grid.o
-	${CC} test-grid.o grid.o grid.h grid_utilities.h grid_utilities.o -lm -o test-grid
+test-grid: test-grid.o grid.o grid_utilities.o
+	${CC} test-grid.o grid.o grid_utilities.o grid.h grid_utilities.h -lm -o test-grid
 
 include files.txt
 files.txt: $(SOURCES)
@@ -24,9 +24,10 @@ test:
 	./test-grid
 
 install:
-	ar -r libgrid.a grid.o
+	ar -r libgrid.a grid.o grid_utilities.o
 	mkdir ../../lib -p
 	mkdir ../../include -p
 	cp grid.h ../../include/
+	cp grid_utilities.h ../../include/
 	mv libgrid.a ../../lib
 

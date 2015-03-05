@@ -9,7 +9,7 @@ void draw_grid(grid g){
   printf("-------------\n");
   for(int y=0;y<GRID_SIDE;y++) {
     for(int x=0;x<GRID_SIDE;x++){
-      printf("%i",g->tiles[y][x]);
+      printf("%i",get_tile(g,x,y));
     }
     printf("\n");
   }

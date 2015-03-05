@@ -5,7 +5,8 @@
  * \brief Contains additional functions needed to play 2048 game.
  **/
 
-
+#include <stdio.h>
+#include <math.h>
 #include <stdbool.h>
 #include "grid.h"
 
