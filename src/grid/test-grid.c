@@ -1,4 +1,5 @@
 #include "grid.h"
+#include "grid_utilities.h"
 #include <stdio.h>
 #include <stdbool.h>
 #include <stdlib.h>
@@ -27,26 +28,6 @@ void title(char* title)
   color("35");
   printf("\n%s",title);
   color("0");
-}
-
-/**
- * \brief Check the equality of two grids.
- * \return true if equals, false if not equals
- */
-bool equals(grid g1, grid g2)
-{
-  bool res = true;
-  for(int i=0;i<GRID_SIDE;i++)
-    {
-      for(int j=0;j<GRID_SIDE;j++)
-	{
-	  if(get_tile(g1,i,j)!=get_tile(g2,i,j))
-	    res = false;
-	}
-    }
-  if(grid_score(g1)!=grid_score(g2))
-    res=false;
-  return res;
 }
 
 int main(int argc, char *argv[]) {
@@ -146,6 +127,8 @@ int main(int argc, char *argv[]) {
   if(!ok)
     printf("\t(%d%% : %d%%)",two,100-two);
 
+  delete_grid(h);
+  
   printf("\nTest proba position :\t");
   int c1 = 0;
   int c2 = 0;
@@ -181,14 +164,14 @@ int main(int argc, char *argv[]) {
  
   title("Personal functions :");
 
-  printf("\nTest inverser_tab :\t");
+  printf("\nTest invert_array :\t");
   int tableau[GRID_SIDE];
   for(int i=0;i<GRID_SIDE;i++){
     tableau[i]=i;
   }
   i=GRID_SIDE;
   ok=true;
-  inverser_tab(tableau,&i);
+  invert_array(tableau,&i);
   for(int j=0;j<GRID_SIDE;j++)
     {
       if(tableau[j]!=GRID_SIDE-j-1)
@@ -196,12 +179,12 @@ int main(int argc, char *argv[]) {
     }
   result(ok);
 
-  printf("\nTest grid->tab :\t");
+  printf("\nTest grid->array :\t");
   set_tile(h,0,3,3);
   set_tile(h,2,3,0);
   set_tile(h,3,3,1);
   ok=true;
-  grid_to_tab(h,tableau,&i,3,false,true);
+  grid_to_array(h,tableau,&i,3,false,true);
   i=0;
   for(int j=0;j<GRID_SIDE;j++)
     {
@@ -214,8 +197,8 @@ int main(int argc, char *argv[]) {
     }
   result(ok);
 
-  printf("\nTest tri_tab :\t\t");
-  tr_tab(tableau,&i);
+  printf("\nTest compute_array :\t\t");
+  compute_array(tableau,&i);
   ok = true;
   for(int j=0;j<i;j++)
     {
@@ -224,9 +207,9 @@ int main(int argc, char *argv[]) {
     }
   result(ok);
 
-  printf("\nTest tab->grid :\t");
+  printf("\nTest array->grid :\t");
   ok = true;
-  tab_to_grid(h,tableau,&i,3,false,true);
+  array_to_grid(h,tableau,&i,3,false,true);
   i=0;
   for(int j=0;j<GRID_SIDE;j++)
     {

@@ -1,5 +1,5 @@
-#ifndef _GRILLE_H_
-#define _GRILLE_H_
+#ifndef _GRID_H_
+#define _GRID_H_
 /**
  * \file grid.h
  * \brief Contains structures and functions needed to play 2048 game.
@@ -132,8 +132,6 @@ void add_tile (grid g);
  */
 void play (grid g, dir d);
 
-void inverser_tab(int tab[], int *size);
-void grid_to_tab(grid g, int tab[], int *size, int x, bool inverser,bool horizontal);
-int tr_tab(int tab[], int *size);
-void tab_to_grid(grid g, int tab[], int *size, int x, bool inverser, bool horizontal);
+
+
 #endif
