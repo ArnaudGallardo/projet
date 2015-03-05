@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <math.h>
 #include <time.h>
-#include "grid.h"
+#include <grid.h>
 
 
 WINDOW *create_newwin(int height, int width, int starty, int startx);
@@ -110,14 +110,18 @@ WINDOW *create_newwin(int height, int width, int starty, int startx)
 	local_win = newwin(height, width, starty, startx);
 	box(local_win, 0 , 0); 
 	for(int i=5;i<width-1;i+=5) {
-	  mvwvline(local_win,1,i,'|',height-2);
+	  mvwaddch(local_win,0,i,ACS_TTEE);
+	  mvwvline(local_win,1,i,ACS_VLINE,height-2);
+	  mvwaddch(local_win,height-1,i,ACS_BTEE);
 	}
 	for(int i=2;i<height-1;i+=2){
-	  mvwhline(local_win,i,1,'-',width-2);
+	  mvwaddch(local_win,i,0,ACS_LTEE);
+	  mvwhline(local_win,i,1,ACS_HLINE,width-2);
+	  mvwaddch(local_win,i,width-1,ACS_RTEE);
 	}
 	for(int row=2;row<height-1;row+=2){
 	  for(int col=5;col<width-1;col+=5)
-	    mvwaddch(local_win,row,col,'+');
+	    mvwaddch(local_win,row,col,ACS_PLUS);
 	}
 	wmove(local_win,0,0);
 	wrefresh(local_win);
