@@ -10,7 +10,7 @@ all: $(OUTFILES)
 	$(MAKE) -C . install
 
 test-grid: test-grid.o grid.o
-	${CC} test-grid.o grid.o grid.h grid_utilities.h -lm -o test-grid
+	${CC} test-grid.o grid.o grid.h grid_utilities.h grid_utilities.o -lm -o test-grid
 
 include files.txt
 files.txt: $(SOURCES)
