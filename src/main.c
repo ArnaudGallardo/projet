@@ -172,12 +172,12 @@ void draw_game_over(grid g)
 {
   int ch;
   clear();
-  wattron(local_win,COLOR_PAIR(7));
+  attron(COLOR_PAIR(7));
   printw("GAME OVER\n");
-  wattroff(local_win,COLOR_PAIR(7));
-  wattron(local_win,COLOR_PAIR(4));
+  attroff(COLOR_PAIR(7));
+  attron(COLOR_PAIR(4));
   printw("Score : %ld points\n",grid_score(g));
-  wattroff(local_win,COLOR_PAIR(4));
+  attroff(COLOR_PAIR(4));
   printw("F2 to exit\n");
 
   while(((ch = getch()) != KEY_F(2))){
