@@ -27,7 +27,7 @@ void delete_grid(grid g){
   for(int y=0;y<GRID_SIDE;y++) {
     free(g->tiles[y]);
   }
-  free(g->tiles); 
+  free(g->tiles);
   free(g);
 }
 
@@ -84,54 +84,50 @@ bool game_over(grid g){
   return (!can_move(g,UP) && !can_move(g,DOWN) && !can_move(g,LEFT) && !can_move(g,RIGHT));
 }
 
-void do_move(grid g, dir d){ 
+void do_move(grid g, dir d){
   int size = 0;
   int array[GRID_SIDE];
   if(can_move(g,d)) {
     for(int x=0;x<GRID_SIDE;x++)
       {
-	//Faire Doc grid_utilities.h
-	//Expliquer la méthode utilisée
-	//d>=2 <=> d==DOWN || d==RIGHT
-	//d%2 <=> d==LEFT || d==RIGHT
-	grid_to_array(g,array,&size,x,(d>=2),(d%2));
-	g->score+=compute_array(array,&size);
-	array_to_grid(g,array,&size,x,(d>=2),(d%2));
+        //Doc des fonctions dans grid_utilities.h
+        //d>=2 <=> d==DOWN || d==RIGHT
+        //d%2 <=> d==LEFT || d==RIGHT
+        grid_to_array(g,array,&size,x,(d>=2),(d%2));
+        g->score+=compute_array(array,&size);
+        array_to_grid(g,array,&size,x,(d>=2),(d%2));
       }
   }
 }
 
 void add_tile(grid g){
-  //DEBUT ARRAYLEAU DES VIDES
+  //Creation d'un tableau des cases vides
   int **array = malloc(GRID_SIDE*GRID_SIDE*sizeof(int*));
   int size=0;
   for(int y=0;y<GRID_SIDE;y++) {
     for(int x=0;x<GRID_SIDE;x++){
       if(get_tile(g,x,y)==0){
         array[size] = malloc(2*sizeof(int));
-	array[size][0]=x;
-	array[size][1]=y;
-	size++;
+        array[size][0]=x;
+        array[size][1]=y;
+        size++;
       }
     }
   }
-  //FIN ARRAYLEAU DES VIDES
+
   if(size>=1){
-    //DEBUT RANDOM rand()%size
+    //Calcul de deux nombres aleatoire, choix de le calculer jusqu'a 1000 pour plus de precision
     int alea = rand()%1000;
     int pos_alea = rand()%size;
     if (alea<900)
       set_tile(g,array[pos_alea][0],array[pos_alea][1],1);
     else
       set_tile(g,array[pos_alea][0],array[pos_alea][1],2);
-    //FIN RANDOM
   }
 
-  //DEBUT FREE
   for(int i=0;i<size;i++)
     free(array[i]);
   free(array);
-  //FIN FREE
 }
 
 void play(grid g, dir d){

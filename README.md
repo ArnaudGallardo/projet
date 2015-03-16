@@ -11,8 +11,12 @@ ___Group members :___
 
 ___Compilation :___
 
->make
+>make install
 
->make run
+___Lancer le jeu :___
+
+>bin/main
+
+___Lancer les tests :___
 
 >make test

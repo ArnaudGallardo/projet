@@ -3,7 +3,7 @@
 
 
 /**
- * \brief Print the grid in the default output.
+ * \brief Dessine de maniere rudimentaire la grille dans l'affichage par default
  */
 void draw_grid(grid g){
   printf("-------------\n");
@@ -18,7 +18,7 @@ void draw_grid(grid g){
 
 
 /**
- * \brief Check the equality of two grids.
+ * \brief Verifie l'egalite de deux grilles
  * \return true if equals, false if not equals
  */
 bool equals(grid g1, grid g2)
@@ -39,9 +39,11 @@ bool equals(grid g1, grid g2)
 
 
 /**
- * \brief Compute the new line array
+ * \brief En partant d'un tableau 1D representant une ligne verticale ou horizontale d'une grille, modifie
+            ce tableauen en empilant les tuiles identiques (l'empilement se fait de la fin du tableau vers le debut)
+ * \return Le score resultat du mouvement
  */
-int compute_array(int array[], int *size){ //CHANGER NOM FCTION
+int compute_array(int array[], int *size){
   int score=0;
   for(int i=1;i<*size;i++){
     if(array[i-1]==array[i]) {
@@ -57,11 +59,13 @@ int compute_array(int array[], int *size){ //CHANGER NOM FCTION
 }
 
 /**
- * \brief Transform a grid line into an usable line array
- * \param g the grid to use
- * \param array the line array
- * \param size the size of the line array
- * \param x one of the position parameter
+ * \brief Transforme une grille en une ligne (tableau 1D de taille size) selon les parametres de position donnes et sans prendre en compte les zeros
+ * \param g la grille a utiliser
+ * \param array le tableau 1D
+ * \param size la taille du tableau
+ * \param x la position de la ligne dans le tableau
+ * \param invert permet de lire la grille dans un sens ou dans l'autre (lecture de base : de haut en bas, permet de passer de bas en haut)
+ * \param horizontal permet de lire la grille verticalement ou horizontalement
  */
 void grid_to_array(grid g, int array[], int *size, int x, bool invert, bool horizontal)
 {
@@ -85,9 +89,9 @@ void grid_to_array(grid g, int array[], int *size, int x, bool invert, bool hori
 }
 
 /**
- * \brief Reverse an array
- * \param array the array to reverse
- * \param size the size of the array
+ * \brief Inverse un tableau 1D de taille size
+ * \param array le tableau a inverser
+ * \param size la taille du tableau
  */
 void invert_array(int array[], int *size)
 {
@@ -101,11 +105,13 @@ void invert_array(int array[], int *size)
 }
 
 /**
- * \brief Copy an line array into a grid line
- * \param g the grid
- * \param array the line array
- * \param size the size of the line array
- * \param x the position of the line in the grid
+ * \brief Effectue l'action inverse de grid_to_array (voir grid_to_array), en rajoutant des zeros
+ * \param g la grille a utiliser
+ * \param array le tableau 1D
+ * \param size la taille du tableau
+ * \param x la position de la ligne dans le tableau
+ * \param invert permet de lire la grille dans un sens ou dans l'autre (lecture de base : de haut en bas, permet de passer de bas en haut)
+ * \param horizontal permet de lire la grille verticalement ou horizontalement
  */
 void array_to_grid(grid g, int array[], int *size, int x, bool invert, bool horizontal)
 {

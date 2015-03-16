@@ -9,5 +9,4 @@ clean:
 	$(MAKE) -C src clean
 test:
 	$(MAKE) -C src test
-run:
-	bin/main
+

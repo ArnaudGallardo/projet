@@ -10,9 +10,6 @@ void draw_grid_win(grid g, WINDOW *local_win);
 void destroy_win(WINDOW *local_win);
 void draw_game_over(grid g);
 void update_score(grid,int,int);
-void test(grid g);
-void save_score(grid g,char* pseudo);
-void draw_score();
 
 int main(int argc, char *argv[])
 {	WINDOW *my_win;
@@ -37,14 +34,15 @@ int main(int argc, char *argv[])
 	init_pair(9, COLOR_RED, COLOR_YELLOW);
 	init_pair(10, COLOR_RED, COLOR_GREEN);
 	init_pair(11, COLOR_RED, COLOR_CYAN);
+	init_pair(12, COLOR_RED, COLOR_BLUE);
+	init_pair(13, COLOR_RED, COLOR_MAGENTA);
 
 	cbreak();
 	keypad(stdscr, TRUE);
 	curs_set(0);
 	height = 2*GRID_SIDE + 1;
 	width = 5*GRID_SIDE + 1;
-	//height=9;
-	//width=17;
+
 	starty = (LINES - height) / 2;
 	startx = (COLS - width) / 2;
 	printw("Press F2 to exit");
@@ -78,12 +76,8 @@ int main(int argc, char *argv[])
 			        play(g,DOWN);
 			        draw_grid_win(g,my_win);
 				update_score(g,starty-1,startx);
-				break;	
+				break;
 		}
-	  if(ch==KEY_F(6)){
-	    test(g);
-	    draw_grid_win(g,my_win);
-	  }
 	}
 	if(game_over(g))
 	  draw_game_over(g);
@@ -91,13 +85,6 @@ int main(int argc, char *argv[])
 	destroy_win(my_win);
 	endwin();
 	return 0;
-}
-
-void test(grid g)
-{
-  add_tile(g);
-  set_tile(g,0,0,9);
-  set_tile(g,1,0,9);
 }
 
 void update_score(grid g,int starty,int startx)
@@ -108,7 +95,7 @@ WINDOW *create_newwin(int height, int width, int starty, int startx)
 {	WINDOW *local_win;
 
 	local_win = newwin(height, width, starty, startx);
-	box(local_win, 0 , 0); 
+	box(local_win, 0 , 0);
 	for(int i=5;i<width-1;i+=5) {
 	  mvwaddch(local_win,0,i,ACS_TTEE);
 	  mvwvline(local_win,1,i,ACS_VLINE,height-2);
@@ -143,12 +130,15 @@ void draw_grid_win(grid g, WINDOW *local_win)
       mvwprintw(local_win,yp,xp-1,"    ");
       if(get_tile(g,x,y)!=0)
 	{
-	  wattron(local_win,COLOR_PAIR(get_tile(g,x,y)));
+	    if(get_tile(g,x,y)<13)
+            wattron(local_win,COLOR_PAIR(get_tile(g,x,y)));
+        else
+            wattron(local_win,COLOR_PAIR(13));
 	  int n = convert_tuile(get_tile(g,x,y));
 	  int c=0;
 	  while(n!=0)
 	    {
-	      n/=10;             /* n=n/10 */
+	      n/=10;
 	      ++c;
 	    }
 	  if (c==4)
@@ -157,7 +147,11 @@ void draw_grid_win(grid g, WINDOW *local_win)
 	    mvwprintw(local_win,yp,xp,"%d",convert_tuile(get_tile(g,x,y)));
 	  else
 	    mvwprintw(local_win,yp,xp,"%d",convert_tuile(get_tile(g,x,y)));
-	  wattroff(local_win,COLOR_PAIR(get_tile(g,x,y)));
+
+	  if(get_tile(g,x,y)<13)
+            wattroff(local_win,COLOR_PAIR(get_tile(g,x,y)));
+        else
+            wattroff(local_win,COLOR_PAIR(13));
 	}
       xp+=5;
     }
@@ -178,46 +172,16 @@ void draw_game_over(grid g)
 {
   int ch;
   clear();
+  wattron(local_win,COLOR_PAIR(7));
   printw("GAME OVER\n");
+  wattroff(local_win,COLOR_PAIR(7));
+  wattron(local_win,COLOR_PAIR(4));
+  printw("Score : %ld points\n",grid_score(g));
+  wattroff(local_win,COLOR_PAIR(4));
   printw("F2 to exit\n");
-  printw("F3 to restart\n");
-  int alea;
-  int c;
-  FILE *file;
-  file = fopen("./src/test.txt", "r");
-  if (file) {
-    while ((c = getc(file)) != EOF)
-      {	  
-	alea = rand()%7 +1;
-	attron(COLOR_PAIR(alea));
-	printw("%c",c);
-	attroff(COLOR_PAIR(alea));
-      }
-    fclose(file);
-  }
+
   while(((ch = getch()) != KEY_F(2))){
 
   }
-  char pseudo[3];
-  printw("Pseudo : ");
-  pseudo[0]='A';
-  pseudo[1]='A';
-  pseudo[2]='A';
-  save_score(g,pseudo);
 }
 
-void save_score(grid g,char* pseudo)
-{
-  
-  FILE *f = fopen("scoreboard", "a");
-  if (f == NULL)
-    {
-      printf("Error opening file!\n");
-      exit(1);
-    }
-
-  fprintf(f, "%s\t%li\n", pseudo,grid_score(g));
-
-  fclose(f);
-
-}
