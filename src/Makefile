@@ -6,13 +6,14 @@ LDFLAGS= -lm -L ../lib -lgrid -lncurses
 VPATH = ../include
 OBJ= main.o
 
-main : $(OBJ)
+main: $(OBJ)
 	$(CC) $(OBJ) $(LDFLAGS) -o $@
 
 main.o: main.c grid.h
 
-clean :
+clean:
 	$(MAKE) -C grid clean
+	$(MAKE) -C sdl clean
 	rm -f main.o main
 
 install:
@@ -23,5 +24,5 @@ install:
 test:
 	$(MAKE) -C grid test
 
-
-
+test-sdl:
+	$(MAKE) -C sdl test

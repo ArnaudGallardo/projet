@@ -11,12 +11,13 @@ ___Group members :___
 
 ___Compilation :___
 
->make install
+> make install
 
 ___Lancer le jeu :___
 
->bin/main
+> bin/main
 
 ___Lancer les tests :___
 
->make test
+> make test
+> make test-sdl
