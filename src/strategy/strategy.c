@@ -9,22 +9,13 @@
 */
 int scoreGrid(grid g){
   int c=0;
-  int sens=0;
   for(int i=1;i<GRID_SIDE;i++){
-    sens++;
     for(int j=1;j<GRID_SIDE;j++){
       if((get_tile(g,i,j))!=0){
-	if(sens%2==1){
-	  if(get_tile(g,i,j)<=get_tile(g,i-1,j))
-	    c++;
-	  else
-	    c--;
-	}
-	if(sens%2==0){
-	  if(get_tile(g,i,j)>=get_tile(g,i-1,j))
-	    c++;
-	  else   
-	    c--;
+	 if(get_tile(g,i,j)<=get_tile(g,i-1,j))
+	   c++;
+	 else
+	   c--;
 	}
       }
     }

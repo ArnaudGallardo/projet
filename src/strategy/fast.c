@@ -82,7 +82,22 @@ int score(grid g){
   score*=(nb_vide(g)/(GRID_SIDE*GRID_SIDE));
 
   //Partie 3 : Cases identiques !
+  int r=0;
+  for(int i=0;i<GRID_SIDE;i++){
+    for(int j=0;j<GRID_SIDE;j++){
+      for(int x=0;x<GRID_SIDE;x++){
+	for(int y=0;y<GRID_SIDE;y++){
+	  if((x+y%2)!=0){
+	    if(get_tile(g,i+x,j+y)==get_tile(g,i,j)){
+	      r++;
+	    }
+	  }
+	}
+      }
+    }
+  }
 
+  score+=r;
   
   
   return score;
