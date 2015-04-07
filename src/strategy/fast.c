@@ -82,7 +82,7 @@ int score(grid g){
   score*=(nb_vide(g)/(GRID_SIDE*GRID_SIDE));
 
   //Partie 3 : Cases identiques !
-  int r=0;
+  /*int r=0;
   for(int i=0;i<GRID_SIDE;i++){
     for(int j=0;j<GRID_SIDE;j++){
       for(int x=0;x<GRID_SIDE;x++){
@@ -97,7 +97,7 @@ int score(grid g){
     }
   }
 
-  score+=r;
+  score+=r;*/
   
   
   return score;

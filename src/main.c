@@ -48,8 +48,8 @@ int main(int argc, char *argv[])
 	printw("Press F2 to exit\n");
 	printw("Press F5 to start fast strategy\n");
 	printw("Press F6 to start efficient strategy");
+ start:
 	refresh();
-
 	grid g = new_grid();
 	add_tile(g);
 	add_tile(g);
@@ -60,7 +60,8 @@ int main(int argc, char *argv[])
 	while(((ch = getch()) != KEY_F(2)) && !game_over(g))
 	{
 	  switch(ch)
-	    {case KEY_LEFT:
+	    {
+	    case KEY_LEFT:
 		play(g,LEFT);
 		draw_grid_win(g,my_win);
 		update_score(g,starty-1,startx);
@@ -81,22 +82,42 @@ int main(int argc, char *argv[])
 	      update_score(g,starty-1,startx);
 	      break;
 	    }
-	  if(ch== KEY_F(5)) {
-	    while(!game_over(g)) {
-	      play(g,fast(g));
-	      draw_grid_win(g,my_win);
-	      update_score(g,starty-1,startx);
+	  if(ch == KEY_F(5))
+	    {
+	      while(!game_over(g))
+		{
+		  play(g,fast(g));
+		  draw_grid_win(g,my_win);
+		  update_score(g,starty-1,startx);
+		}
+	      while((ch = getch()) != KEY_F(2))
+		{
+		  if(ch == KEY_F(3))
+		    {
+		      delete_grid(g);
+		      goto start;
+		    }
+		}
 	    }
-	  }
-	  if(ch== KEY_F(6)) {
-	    while(!game_over(g)) {
-	      play(g,efficient(g));
-	      draw_grid_win(g,my_win);
-	      update_score(g,starty-1,startx);
+	  if(ch == KEY_F(6))
+	    {
+	      while(!game_over(g)) {
+		play(g,efficient(g));
+		draw_grid_win(g,my_win);
+		update_score(g,starty-1,startx);
+	      }
+	      while((ch = getch()) != KEY_F(2))
+		{
+		  if(ch == KEY_F(3))
+		    {
+		      delete_grid(g);
+		      goto start;
+		    }
+		}
 	    }
-	  }
 	  
 	}
+
 	if(game_over(g))
 	  draw_game_over(g);
 	delete_grid(g);
