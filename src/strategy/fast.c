@@ -11,7 +11,5 @@ int fast(grid g){
   if(can_move(g,2)){
     return 2;
   }
-  if(can_move(g,3)){
-    return 3;
-  }
+  return 3;
 }
