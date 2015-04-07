@@ -15,7 +15,8 @@ ___Compilation :___
 
 ___Lancer le jeu :___
 
-> bin/main
+> Se placer dans le dossier bin
+> ./main
 
 ___Lancer les tests :___
 

@@ -2,7 +2,7 @@ CC= gcc
 
 CFLAGS= -g -Wall -std=c99
 CPPFLAGS= -I ../include
-LDFLAGS= -lm -L ../lib -lgrid -lncurses
+LDFLAGS= -Wl,-rpath=../lib -lm -L ../lib -lgrid -lncurses -lstrat
 VPATH = ../include
 OBJ= main.o
 
@@ -14,10 +14,13 @@ main.o: main.c grid.h
 clean:
 	$(MAKE) -C grid clean
 	$(MAKE) -C sdl clean
+	$(MAKE) -C strategy clean
 	rm -f main.o main
 
 install:
 	$(MAKE) -C grid install
+	$(MAKE) -C strategy install
+	$(MAKE) -C . main
 	mkdir ../bin/ -p
 	mv main ../bin/
 
