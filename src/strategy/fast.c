@@ -1,7 +1,7 @@
 #include <grid.h>
 
 
-int fast(g){
+int fast(grid g){
   if(can_move(g,0)){
     return 0;
   }
