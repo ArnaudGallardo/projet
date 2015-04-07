@@ -1,9 +1,5 @@
 #include <grid.h>
 
-<<<<<<< HEAD
-=======
-
->>>>>>> 15dc636f0b2b8cfad849dba1f2c418267b9b17bf
 int fast(grid g){
   if(can_move(g,0)){
     return 0;
