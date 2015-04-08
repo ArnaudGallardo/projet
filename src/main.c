@@ -101,10 +101,19 @@ int main(int argc, char *argv[])
 	    }
 	  if(ch == KEY_F(6))
 	    {
+	      int tab[2];
+	      tab[0]=0;
+	      tab[1]=0;
 	      while(!game_over(g)) {
+		gps(g,0,tab);
+		play(g,tab[1]);
+		draw_grid_win(g,my_win);
+		update_score(g,starty-1,startx);
+		/*
 		play(g,efficient(g));
 		draw_grid_win(g,my_win);
 		update_score(g,starty-1,startx);
+		*/
 	      }
 	      while((ch = getch()) != KEY_F(2))
 		{

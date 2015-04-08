@@ -147,3 +147,48 @@ int efficient(grid g){
   return dir;
 }
 
+void gps(grid g, int etage,int * tab){
+  int score_max = 0;
+  int dir = 0;
+  //grid g_tab[GRID_SIDE*GRID_SIDE];
+  grid g_copie = new_grid();
+  
+  for(int i=0;i<4;i++){
+    if(can_move(g,i)){
+      copy_grid(g,g_copie); //On reprend une copie
+      int score_total = 0; //Initialise le score total des possibilitées
+      do_move(g_copie,i); //On move
+
+      int x=0;
+      int y=0;
+    
+      for(int p=0;p<nb_vide(g_copie);p++){
+	if(get_tile(g_copie,x,y)==0){
+	  set_tile(g_copie,x,y,1);
+	  score_total+=score(g_copie);
+
+	  if(etage<50/(1+nb_vide(g_copie))){//FIXER ETAGE MAX ICI
+	    gps(g_copie,++etage,tab);
+	    score_total+=tab[0]*(etage);
+	  }
+	  
+	  set_tile(g_copie,x,y,0);
+	  if(x<GRID_SIDE-1)
+	    x++;
+	  else{
+	    x=0;
+	    y++;
+	  }
+	}
+      }
+
+      if(score_total>=score_max){
+	score_max = score_total;
+	dir = i;
+      }
+    }
+  }
+  //printf("score max : %d\n",score_max);
+  tab[0]=score_max;
+  tab[1]=dir;
+}
