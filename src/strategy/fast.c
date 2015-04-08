@@ -146,8 +146,6 @@ int efficient(grid g){
   //printf("score max : %d\n",score_max);
   return dir;
 }
-<<<<<<< HEAD
-=======
 
 void gps(grid g, int etage,int * tab){
   int score_max = 0;
@@ -223,4 +221,3 @@ void gps(grid g, int etage,int * tab){
       tab[1]=dir_final;
     }
 }
->>>>>>> b50a5b9f7ea67d1793f5f16601ccf1e99ea6aaa7
