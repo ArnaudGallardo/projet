@@ -152,6 +152,14 @@ void gps(grid g, int etage,int * tab){
   int dir = 0;
   //grid g_tab[GRID_SIDE*GRID_SIDE];
   grid g_copie = new_grid();
+  int scores_moyen[4];
+  scores_moyen[0]=0;
+  scores_moyen[1]=0;
+  scores_moyen[2]=0;
+  scores_moyen[3]=0;
+  int dir_final;
+  //int etage_max = 50/(1+nb_vide(g_copie));
+  int etage_max = 5;
   
   for(int i=0;i<4;i++){
     if(can_move(g,i)){
@@ -167,9 +175,12 @@ void gps(grid g, int etage,int * tab){
 	  set_tile(g_copie,x,y,1);
 	  score_total+=score(g_copie);
 
-	  if(etage<50/(1+nb_vide(g_copie))){//FIXER ETAGE MAX ICI
+	  if(etage<etage_max){//FIXER ETAGE MAX ICI
 	    gps(g_copie,++etage,tab);
 	    score_total+=tab[0]*(etage);
+	  }
+	  else {
+	    scores_moyen[i]+=score(g_copie);
 	  }
 	  
 	  set_tile(g_copie,x,y,0);
@@ -181,14 +192,32 @@ void gps(grid g, int etage,int * tab){
 	  }
 	}
       }
-
+      
       if(score_total>=score_max){
 	score_max = score_total;
 	dir = i;
       }
-    }
+    }    
   }
+
+  
+  int tmp=0;
+  for(int i=0;i<4;i++) {
+    if(scores_moyen[i]>tmp)
+      {
+	if(can_move(g,i)) {
+	  tmp=scores_moyen[i];
+	  dir_final=i;
+	}
+      }
+  }
+
+  
+  
   //printf("score max : %d\n",score_max);
-  tab[0]=score_max;
-  tab[1]=dir;
+  if(etage>=etage_max)
+    {
+      tab[0]=score_max;
+      tab[1]=dir_final;
+    }
 }
