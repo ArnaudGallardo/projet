@@ -146,4 +146,3 @@ int efficient(grid g){
   //printf("score max : %d\n",score_max);
   return dir;
 }
-
