@@ -22,4 +22,5 @@ ___Lancer le jeu :___
 ___Lancer les tests :___
 
 > make test
+
 > make test-sdl
