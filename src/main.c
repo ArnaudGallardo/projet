@@ -101,12 +101,8 @@ int main(int argc, char *argv[])
 	    }
 	  if(ch == KEY_F(6))
 	    {
-	      int tab[2];
-	      tab[0]=0;
-	      tab[1]=0;
 	      while(!game_over(g)) {
-		gps(g,0,tab);
-		play(g,tab[1]);
+		play(g,gps(g,0));
 		draw_grid_win(g,my_win);
 		update_score(g,starty-1,startx);
 		/*
