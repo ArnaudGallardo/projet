@@ -147,10 +147,8 @@ int efficient(grid g){
   return dir;
 }
 
-void gps(grid g, int etage,int * tab){
-  int score_max = 0;
-  int dir = 0;
-  //grid g_tab[GRID_SIDE*GRID_SIDE];
+int gps(grid g, int etage){
+  
   grid g_copie = new_grid();
   int scores_moyen[4];
   scores_moyen[0]=0;
@@ -164,7 +162,6 @@ void gps(grid g, int etage,int * tab){
   for(int i=0;i<4;i++){
     if(can_move(g,i)){
       copy_grid(g,g_copie); //On reprend une copie
-      int score_total = 0; //Initialise le score total des possibilitées
       do_move(g_copie,i); //On move
 
       int x=0;
@@ -173,11 +170,9 @@ void gps(grid g, int etage,int * tab){
       for(int p=0;p<nb_vide(g_copie);p++){
 	if(get_tile(g_copie,x,y)==0){
 	  set_tile(g_copie,x,y,1);
-	  score_total+=score(g_copie);
 
 	  if(etage<etage_max){//FIXER ETAGE MAX ICI
-	    gps(g_copie,++etage,tab);
-	    score_total+=tab[0]*(etage);
+	    gps(g_copie,++etage);
 	  }
 	  else {
 	    scores_moyen[i]+=score(g_copie);
@@ -192,15 +187,9 @@ void gps(grid g, int etage,int * tab){
 	  }
 	}
       }
-      
-      if(score_total>=score_max){
-	score_max = score_total;
-	dir = i;
-      }
     }    
   }
 
-  
   int tmp=0;
   for(int i=0;i<4;i++) {
     if(scores_moyen[i]>tmp)
@@ -211,13 +200,10 @@ void gps(grid g, int etage,int * tab){
 	}
       }
   }
-
-  
   
   //printf("score max : %d\n",score_max);
   if(etage>=etage_max)
     {
-      tab[0]=score_max;
-      tab[1]=dir_final;
+      return dir_final;
     }
 }
