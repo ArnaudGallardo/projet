@@ -1,5 +1,7 @@
 #include <grid.h>
 
+int NB_DIR=4;
+
 int fast(grid g){
   if(can_move(g,0)){
     return 0;
@@ -70,7 +72,7 @@ int score(grid g){
   }
   int max=0;
   int imax=0;
-  for(int i=0;i<4;i++){
+  for(int i=0;i<NB_DIR;i++){
     if(score_coin[i]>max){
       max=score_coin[i];
       imax=i;
@@ -83,13 +85,13 @@ int score(grid g){
 
   //Partie 3 : Cases identiques !
   int r=0;
-  for(int i=0;i<GRID_SIDE;i++){
-    for(int j=0;j<GRID_SIDE;j++){
-      for(int x=-1;x<2;x++){
-	for(int y=-1;y<2;y++){
-	  if((x+y%2)!=0){
-	    if(i+x>=0&&j+y>=0&&i+x<4&&j+y<4){
-	      if(get_tile(g,i+x,j+y)==get_tile(g,i,j)){
+  for(int i=0; i<GRID_SIDE; i++){
+    for(int j=0; j<GRID_SIDE; j++){
+      for(int x=-1; x<2; x++){
+	for(int y=-1; y<2; y++){
+	  if((x+y%2)!= 0){ // truc yolo de timo sur les diagonales non diagonales
+	    if(i+x>= 0 && j+y>= 0 && i+x< GRID_SIDE && j+y< GRID_SIDE){
+	      if(get_tile(g, i+x, j+y)== get_tile(g, i, j)){
 		r++;
 	      }
 	    }
@@ -114,7 +116,7 @@ int efficient(grid g){
   //grid g_tab[GRID_SIDE*GRID_SIDE];
   grid g_copie = new_grid();
   
-  for(int i=0;i<4;i++){
+  for(int i=0;i<NB_DIR;i++){
     if(can_move(g,i)){
       copy_grid(g,g_copie); //On reprend une copie
       int score_total = 0; //Initialise le score total des possibilitées
@@ -148,25 +150,24 @@ int efficient(grid g){
 }
 
 int gps(grid g, int etage){
-  
   grid g_copie = new_grid();
-  int scores_moyen[4];
+  int scores_moyen[NB_DIR];
   scores_moyen[0]=0;
   scores_moyen[1]=0;
   scores_moyen[2]=0;
   scores_moyen[3]=0;
   int dir_final;
   //int etage_max = 50/(1+nb_vide(g_copie));
-  int etage_max = 5;
+  int etage_max = 15;
   
-  for(int i=0;i<4;i++){
-    if(can_move(g,i)){
-      copy_grid(g,g_copie); //On reprend une copie
+  for(int i=0; i<NB_DIR; i++){
+    if(can_move(g, i)){
+      copy_grid(g, g_copie); //On reprend une copie
       do_move(g_copie,i); //On move
 
       int x=0;
       int y=0;
-    
+      
       for(int p=0;p<nb_vide(g_copie);p++){
 	if(get_tile(g_copie,x,y)==0){
 	  set_tile(g_copie,x,y,1);
@@ -191,9 +192,8 @@ int gps(grid g, int etage){
   }
 
   int tmp=0;
-  for(int i=0;i<4;i++) {
-    if(scores_moyen[i]>tmp)
-      {
+  for(int i=0;i<NB_DIR;i++) {
+    if(scores_moyen[i]>tmp){
 	if(can_move(g,i)) {
 	  tmp=scores_moyen[i];
 	  dir_final=i;
@@ -202,8 +202,7 @@ int gps(grid g, int etage){
   }
   
   //printf("score max : %d\n",score_max);
-  if(etage>=etage_max)
-    {
+  if(etage>=etage_max) {
       return dir_final;
     }
 }
