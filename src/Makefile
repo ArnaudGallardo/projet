@@ -2,7 +2,7 @@ CC= gcc
 
 CFLAGS= -g -Wall -std=c99
 CPPFLAGS= -I ../include
-LDFLAGS= -Wl,-rpath=../lib -lm -L ../lib -lgrid -lncurses -lstrat
+LDFLAGS= -Wl,-rpath=../lib -L ../lib -lgrid -lncurses -lstrat -lm 
 VPATH = ../include
 OBJ= main.o
 
