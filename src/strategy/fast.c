@@ -1,8 +1,12 @@
 #include <grid.h>
+#include <stdio.h>
 
+long int score_rand_arnaud(grid g,int etage,int etage_max);
+long int score_dir_arnaud(grid g, int etage, int etage_max);
 int NB_DIR=4;
 
 int fast(grid g){
+  printf("fast");
   if(can_move(g,0)){
     return 0;
   }
@@ -37,11 +41,11 @@ int nb_max(grid g){
   return max;
 }
 
-int score(grid g){
-  int score=0;
+long int score(grid g){
+  long int score=0;
   //Partie 1 : Au coin !
-  int score_coin[4];
-  int puissance_case = 0;
+  long int score_coin[4];
+  long int puissance_case = 0;
   score_coin[0]=0;//Coin Bas Droite
   for(int x=0;x<GRID_SIDE;x++){
     for(int y=0;y<GRID_SIDE;y++){
@@ -70,7 +74,7 @@ int score(grid g){
       score_coin[3]+=get_tile(g,x,GRID_SIDE-1-y)*puissance_case;
     }
   }
-  int max=0;
+  long int max=0;
   int imax=0;
   for(int i=0;i<NB_DIR;i++){
     if(score_coin[i]>max){
@@ -84,7 +88,7 @@ int score(grid g){
   score*=(nb_vide(g)/(GRID_SIDE*GRID_SIDE));
 
   //Partie 3 : Cases identiques !
-  int r=0;
+  long int r=0;
   for(int i=0; i<GRID_SIDE; i++){
     for(int j=0; j<GRID_SIDE; j++){
       for(int x=-1; x<2; x++){
@@ -149,60 +153,70 @@ int efficient(grid g){
   return dir;
 }
 
-int gps(grid g, int etage){
-  grid g_copie = new_grid();
-  int scores_moyen[NB_DIR];
-  scores_moyen[0]=0;
-  scores_moyen[1]=0;
-  scores_moyen[2]=0;
-  scores_moyen[3]=0;
-  int dir_final;
-  //int etage_max = 50/(1+nb_vide(g_copie));
-  int etage_max = 15;
-  
-  for(int i=0; i<NB_DIR; i++){
-    if(can_move(g, i)){
-      copy_grid(g, g_copie); //On reprend une copie
-      do_move(g_copie,i); //On move
-
-      int x=0;
-      int y=0;
-      
-      for(int p=0;p<nb_vide(g_copie);p++){
-	if(get_tile(g_copie,x,y)==0){
-	  set_tile(g_copie,x,y,1);
-
-	  if(etage<etage_max){//FIXER ETAGE MAX ICI
-	    gps(g_copie,++etage);
-	  }
-	  else {
-	    scores_moyen[i]+=score(g_copie);
-	  }
-	  
-	  set_tile(g_copie,x,y,0);
-	  if(x<GRID_SIDE-1)
-	    x++;
-	  else{
-	    x=0;
-	    y++;
-	  }
-	}
-      }
-    }    
+long int score_dir_arnaud(grid g, int etage, int etage_max) {
+  long int score_total=0;
+  for(int i=0;i<4;i++) {
+    grid g1 = new_grid();
+    copy_grid(g,g1);
+    do_move(g1,i);
+    score_total+=score_rand_arnaud(g1,++etage,etage_max);
+    delete_grid(g1);
   }
+  return score_total;
+}
 
-  int tmp=0;
-  for(int i=0;i<NB_DIR;i++) {
-    if(scores_moyen[i]>tmp){
-	if(can_move(g,i)) {
-	  tmp=scores_moyen[i];
-	  dir_final=i;
-	}
+long int score_rand_arnaud(grid g,int etage,int etage_max) {
+  int x = 0;
+  int y = 0;
+  long int score_total=0;
+  for(int p=0;p<nb_vide(g);p++){
+    if(get_tile(g,x,y)==0) {
+      if(etage>=etage_max) {
+	set_tile(g,x,y,1);
+	score_total+=score(g);
+	set_tile(g,x,y,0);
+	set_tile(g,x,y,2);
+	score_total+=score(g);
+	set_tile(g,x,y,0);
       }
-  }
-  
-  //printf("score max : %d\n",score_max);
-  if(etage>=etage_max) {
-      return dir_final;
+      else {
+	set_tile(g,x,y,1);
+	score_total+=score_dir_arnaud(g,++etage,etage_max);
+	set_tile(g,x,y,0);
+	set_tile(g,x,y,2);
+	score_total+=score_dir_arnaud(g,++etage,etage_max);
+	set_tile(g,x,y,0);
+      }
     }
+    if(x<GRID_SIDE-1)
+      x++;
+    else{
+      x=0;
+      y++;
+    }
+  }
+  return score_total;
+}
+
+int gps_arnaud(grid g) {
+  long int scores[4];
+  int etage_max = 6;
+  for(int i=0;i<4;i++) {
+    grid g1 = new_grid();
+    copy_grid(g,g1);
+    do_move(g1,i);
+    scores[i]=score_rand_arnaud(g1,0,etage_max);
+    delete_grid(g1);
+  }
+  long int tmp_max=0;
+  int i_max=0;
+  for(int j=0;j<4;j++) {
+    if(can_move(g,j)) {
+      if(scores[j]>=tmp_max) {
+	tmp_max=scores[j];
+	i_max=j;
+      }
+    }
+  }
+  return i_max;
 }

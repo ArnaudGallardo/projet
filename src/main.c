@@ -102,7 +102,8 @@ int main(int argc, char *argv[])
 	  if(ch == KEY_F(6))
 	    {
 	      while(!game_over(g)){
-		play(g,gps(g,0));
+		int d = gps_arnaud(g);
+		play(g,d);
 		draw_grid_win(g,my_win);
 		update_score(g,starty-1,startx);
 		/*
