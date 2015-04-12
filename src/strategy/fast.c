@@ -177,7 +177,7 @@ long int score_dir_arnaud(grid g, int etage, int etage_max,double proba) {
       grid g1 = new_grid();
       copy_grid(g,g1);
       do_move(g1,i);
-      score_total+=score_rand_arnaud(g1,etage+1,etage_max,proba*(1/4));
+      score_total+=score_rand_arnaud(g1,etage+1,etage_max,proba*(25/100));
       delete_grid(g1);
     }
   }
@@ -190,26 +190,31 @@ long int score_rand_arnaud(grid g,int etage,int etage_max, double proba) {
   long int score_total=0;
   //printf("r=%d ",etage);
   int score_max=0;
+  double prob_final;
   for(int p=0;p<nb_vide(g);p++){
     if(get_tile(g,x,y)==0) {
       if(etage>=etage_max) {
 	set_tile(g,x,y,1);
 	//score_total+=score(g);
-	if(score(g)>score_max)
-	  score_max=score(g)*proba*(1/nb_vide(g))*(9/10);
+	if(score(g)>score_max) {
+	  prob_final = proba*(100/nb_vide(g))*(90/100)*100;
+	  score_max=score(g)*prob_final;
+	}
 	set_tile(g,x,y,0);
 	set_tile(g,x,y,2);
 	//score_total+=score(g);
-	if(score(g)>score_max)
-	  score_max=score(g)*proba*(1/nb_vide(g))*(1/10);
+	if(score(g)>score_max) {
+	  prob_final = proba*(100/nb_vide(g))*(10/100)*100;
+	  score_max=score(g)*prob_final;
+	}
 	set_tile(g,x,y,0);
       }
       else {
 	set_tile(g,x,y,1);
-	score_total+=score_dir_arnaud(g,etage+1,etage_max,proba*(1/nb_vide(g))*(9/10));
+	score_total+=score_dir_arnaud(g,etage+1,etage_max,proba*(100/nb_vide(g))*(90/100));
 	set_tile(g,x,y,0);
 	set_tile(g,x,y,2);
-	score_total+=score_dir_arnaud(g,etage+1,etage_max,proba*(1/nb_vide(g))*(1/10));
+	score_total+=score_dir_arnaud(g,etage+1,etage_max,proba*(100/nb_vide(g))*(10/100));
 	set_tile(g,x,y,0);
       }
     }
@@ -227,10 +232,13 @@ int gps_arnaud(grid g) {
   //printf("gps_arnaud\n");
   long int scores[4];
   int etage_max = 4;
-  if(nb_vide(g)>1)
-    etage_max=16/nb_vide(g);
+  int vides = nb_vide(g);
+  if(vides>10)
+    etage_max=4;
+  if(vides<=10 && vides>5)
+    etage_max=6;
   else
-  etage_max=10;
+    etage_max=8
   for(int i=0;i<4;i++) {
     grid g1 = new_grid();
     copy_grid(g,g1);
