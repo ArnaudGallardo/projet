@@ -238,7 +238,7 @@ int gps_arnaud(grid g) {
   if(vides<=10 && vides>5)
     etage_max=6;
   else
-    etage_max=8
+    etage_max=8;
   for(int i=0;i<4;i++) {
     grid g1 = new_grid();
     copy_grid(g,g1);
