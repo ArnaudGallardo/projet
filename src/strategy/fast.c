@@ -157,11 +157,13 @@ long int score_dir_arnaud(grid g, int etage, int etage_max) {
   long int score_total=0;
   //printf("d=%d ",etage);
   for(int i=0;i<4;i++) {
-    grid g1 = new_grid();
-    copy_grid(g,g1);
-    do_move(g1,i);
-    score_total+=score_rand_arnaud(g1,etage+1,etage_max);
-    delete_grid(g1);
+    if(can_move(g,i)) {
+      grid g1 = new_grid();
+      copy_grid(g,g1);
+      do_move(g1,i);
+      score_total+=score_rand_arnaud(g1,etage+1,etage_max);
+      delete_grid(g1);
+    }
   }
   return score_total;
 }
@@ -197,13 +199,17 @@ long int score_rand_arnaud(grid g,int etage,int etage_max) {
       y++;
     }
   }
-  return score_total;
+  return score_total/(nb_vide(g)+1);
 }
 
 int gps_arnaud(grid g) {
   //printf("gps_arnaud\n");
   long int scores[4];
   int etage_max = 3;
+  if(nb_vide(g)>2)
+    etage_max=16/nb_vide(g);
+  else
+    etage_max=6;
   for(int i=0;i<4;i++) {
     grid g1 = new_grid();
     copy_grid(g,g1);
