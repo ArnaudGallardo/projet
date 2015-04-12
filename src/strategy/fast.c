@@ -44,34 +44,34 @@ int nb_max(grid g){
 long int score(grid g){
   long int score=0;
   //Partie 1 : Au coin !
-  long int score_coin[4];
+  /*long int score_coin[4];
   long int puissance_case = 0;
   score_coin[0]=0;//Coin Bas Droite
   for(int x=0;x<GRID_SIDE;x++){
     for(int y=0;y<GRID_SIDE;y++){
       puissance_case = (x+1)*(y+1);
-      score_coin[0]+=get_tile(g,x,y)*puissance_case*puissance_case;
+      score_coin[0]+=get_tile(g,x,y)*puissance_case;
     }
   }
   score_coin[1]=0;//Coin Bas Gauche
   for(int x=0;x<GRID_SIDE;x++){
     for(int y=0;y<GRID_SIDE;y++){
       puissance_case = (x+1)*(y+1);
-      score_coin[1]+=get_tile(g,GRID_SIDE-1-x,y)*puissance_case*puissance_case;
+      score_coin[1]+=get_tile(g,GRID_SIDE-1-x,y)*puissance_case;
     }
   }
   score_coin[2]=0;//Coin Haut Gauche
   for(int x=0;x<GRID_SIDE;x++){
     for(int y=0;y<GRID_SIDE;y++){
       puissance_case = (x+1)*(y+1);
-      score_coin[2]+=get_tile(g,GRID_SIDE-1-x,GRID_SIDE-1-y)*puissance_case*puissance_case;
+      score_coin[2]+=get_tile(g,GRID_SIDE-1-x,GRID_SIDE-1-y)*puissance_case;
     }
   }
   score_coin[3]=0;//Coin Haut Droite
   for(int x=0;x<GRID_SIDE;x++){
     for(int y=0;y<GRID_SIDE;y++){
       puissance_case = (x+1)*(y+1);
-      score_coin[3]+=get_tile(g,x,GRID_SIDE-1-y)*puissance_case*puissance_case;
+      score_coin[3]+=get_tile(g,x,GRID_SIDE-1-y)*puissance_case;
     }
   }
   long int max=0;
@@ -83,10 +83,26 @@ long int score(grid g){
     }
   }
   score+=score_coin[imax];
+  */
+  int c=0;
+  for(int y=0;y<GRID_SIDE;y++){
+    for(int x=1;x<GRID_SIDE;x++){
+      if(y%2==0) {
+	 if(get_tile(g,x,y)>get_tile(g,x-1,y))
+	   c++;
+      }
+      else {
+	if(get_tile(g,GRID_SIDE-x+1,y)>get_tile(g,GRID_SIDE-x,y))
+	   c++;
+      }
+    }
+  }
   
+  score+= (c*100)/16;
   //Partie 2 : Nombre de cases vides !
-  score*=(nb_vide(g)/(GRID_SIDE*GRID_SIDE));
-
+  score+=(nb_vide(g)*100)/16;
+  //Partie 2bis : Case max !
+  score+=(nb_max(g)*100)/2048;
   //Partie 3 : Cases identiques !
   long int r=0;
   for(int i=0; i<GRID_SIDE; i++){
@@ -107,7 +123,7 @@ long int score(grid g){
     }
   }
 
-  score+=r;
+  score+=(r*100)/54;
   
   
   return score;
@@ -205,11 +221,11 @@ long int score_rand_arnaud(grid g,int etage,int etage_max) {
 int gps_arnaud(grid g) {
   //printf("gps_arnaud\n");
   long int scores[4];
-  int etage_max = 3;
-  if(nb_vide(g)>2)
+  int etage_max = 4;
+  if(nb_vide(g)>1)
     etage_max=16/nb_vide(g);
   else
-    etage_max=6;
+  etage_max=10;
   for(int i=0;i<4;i++) {
     grid g1 = new_grid();
     copy_grid(g,g1);
