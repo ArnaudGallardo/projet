@@ -1,8 +1,8 @@
 #include <grid.h>
 #include <stdio.h>
 
-long int score_rand_arnaud(grid g,int etage,int etage_max);
-long int score_dir_arnaud(grid g, int etage, int etage_max);
+long int score_rand_arnaud(grid g,int etage,int etage_max, double proba);
+long int score_dir_arnaud(grid g, int etage, int etage_max, double proba);
 int NB_DIR=4;
 
 int fast(grid g){
