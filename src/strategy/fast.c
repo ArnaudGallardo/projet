@@ -235,7 +235,7 @@ int gps_arnaud(grid g) {
     grid g1 = new_grid();
     copy_grid(g,g1);
     do_move(g1,i);
-    scores[i]=score_rand_arnaud(g1,0,etage_max);
+    scores[i]=score_rand_arnaud(g1,0,etage_max,1);
     delete_grid(g1);
   }
   long int tmp_max=0;
