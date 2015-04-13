@@ -86,7 +86,7 @@ int main(int argc, char *argv[])
 	    {
 	      while(!game_over(g))
 		{
-		  play(g,fast(g));
+		  play(g,fast(A2_bifert_daubasse_gallardo_efficient(),g));
 		  draw_grid_win(g,my_win);
 		  update_score(g,starty-1,startx);
 		}
@@ -101,12 +101,8 @@ int main(int argc, char *argv[])
 	    }
 	  if(ch == KEY_F(6))
 	    {
-	      int dirs[4];
-	      for(int i=0;i<4;i++) {
-		dirs[i]=-1;
-	      }
 	      while(!game_over(g)){
-		int d = gps_arnaud(g,dirs);
+		int d = gps_arnaud(A2_bifert_daubasse_gallardo_efficient(),g);
 		play(g,d);
 		draw_grid_win(g,my_win);
 		update_score(g,starty-1,startx);
