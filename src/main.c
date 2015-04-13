@@ -86,7 +86,7 @@ int main(int argc, char *argv[])
 	    {
 	      while(!game_over(g))
 		{
-		  play(g,fast(A2_bifert_daubasse_gallardo_efficient(),g));
+		  play(g,fast(A2_bifert_daubasse_gallardo_fast(),g));
 		  draw_grid_win(g,my_win);
 		  update_score(g,starty-1,startx);
 		}
