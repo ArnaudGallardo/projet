@@ -142,7 +142,7 @@ long int score(grid g){
 }
 
 
-int fast(grid g){
+dir fast(strategy s, grid g){
   if(can_move(g,0)){
     return 0;
   }
@@ -175,11 +175,7 @@ int fast(grid g){
 strategy A2_bifert_daubasse_gallardo_fast()
 {
   strategy s = malloc(sizeof(struct strategy_s));
-  int dirs[4];
-  for(int i=0;i<4;i++)
-    dirs[i]=-1;
   s->play_move = fast;
-  s->mem = (void *) true;
   s->free_strategy = free_memless_strat;
   return s;
 }
