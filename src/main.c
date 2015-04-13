@@ -101,8 +101,12 @@ int main(int argc, char *argv[])
 	    }
 	  if(ch == KEY_F(6))
 	    {
+	      int dirs[4];
+	      for(int i=0;i<4;i++) {
+		dirs[i]=-1;
+	      }
 	      while(!game_over(g)){
-		int d = gps_arnaud(g);
+		int d = gps_arnaud(g,dirs);
 		play(g,d);
 		draw_grid_win(g,my_win);
 		update_score(g,starty-1,startx);
