@@ -110,7 +110,7 @@ Nous détectons la fin du jeu quand aucune des directions n'est jouable, c'est �
   Enfin pour le add\_tile on fait autant de add\_tile que de case puis on vérifie que toute les cases sont occupées.
   \subsection{Fonction perso}
   Afin d'éviter tout bug innatendu nous avons décider de tester nos fonctions qui se trouvent dans grid\_utilities.
-  On remplit donc un tableau de zéro à GRID_SIZE (qui est la taille de toute nos grilles) et on l'inverse à l'aide de notre fonction, on vérifie alors que le tableau est bien inversé.
+  On remplit donc un tableau de zéro à GRID\_SIZE (qui est la taille de toute nos grilles) et on l'inverse à l'aide de notre fonction, on vérifie alors que le tableau est bien inversé.
   Pour tester la fonction grid\_to\_array on remplit trois cases d'une grille de façon à avoir les même valeur que le tableau précédent dans les cases du haut, on applique notre fonction a la grille et on vérifie que nos tableaux sont identique.
   Pour le calcul de la nouvelle grille après mouvement on prend notre tableau de grille et l'on vérifie que ses valeurs sont bien les bonnes, c'està dire qu'elles doivent être rangée dans l'orde décroissant.
   Pour finir la fonction array\_to\_grid on prend notre grille que l'on avait au préalable transformé en tableau que l'on retransforme en grille et on vérifie ensuite que la valeur des tuiles du haut corresponde au tableau qui nous sert de référence dans les autres fonctions. Si ce sont les même la fonction ne contient pas de bug.
