@@ -72,7 +72,7 @@ Pour le mouvement nous avons utilisée tois fonctions qui nous sont propre que s
 
 \begin{Passage d'un tableau à une grille et d'une grille à un tableau}
 
-Ces fonctions servent à transformer une grille en une ligne (tableau 1D de taille size) selon les parametres de position donnés, c'est à dire le paramètre x donnés en argument, et sans prendre en compte les zeros ensuite pour repasser d'une grille a un tableau on retransforme donc notre ligne 1D en grille en combalnt les tuiles vides par des zéros.
+Ces fonctions servent à transformer une grille en une ligne (tableau 1D de taille size) selon les parametres de position donnés, c'est à dire le paramètre x donnés en argument, et sans prendre en compte les zeros ensuite pour repasser d'une grille a un tableau on retransforme donc notre ligne 1D en grille en combalnt les tuiles vides par des zéros. En fonction du sens dans lequel nous voulons faire notre mouvement nous inversons ou non notre tableau, à l'aide de la foncton invert\_array, afin de traiter toute les directions de la même manière.
   
 \end{Passage d'un tableau à une grille et d'une grille à un tableau}
 
@@ -95,8 +95,18 @@ Jouer un coup reviens à vérifier que l'on peut bouger dans la direction demand
 
 \subsection{Fin du jeu}
 
-Nous déétectons la fin du jeu quand aucune des directions n'est jouable, c'est à dire quand on ne peut plus bouger de tuile.
+Nous détectons la fin du jeu quand aucune des directions n'est jouable, c'est à dire quand on ne peut plus bouger de tuile.
 
+\textcolor{red}{\section{Test de grid.c}
+
+  \subsection{Fonctions générales}
+  Dans test\_grid.c nous avons essayer de vérifier le plus de code possible automatiquement.
+  Pour nous aider nous avons crée une fonction result qui affiche, avec un code couleur, si le test est passer avec succés ou non.
+  D'abord on teste que new\_grid crée bien une grille vide, on vérifie donc que chaque tuile est nulle.
+  Ensuite on teste que la copy\_grid copie bien toute la grille c'est à dire le tableau deux dimension doit etre le même et le score lui aussi doit être copié. On crée donc deux grilles et vérifions à l'aide de la fonction equals du fichier grid\_utilities que chaque cases du tableau sont les même puis que les scores sont les même.
+  Le test du score se fait juste par l'anticipation du score de la grille, on fixe donc deux cases et on vérifie que le score de la grille est bien le bon.
+  Pour le test du can\_move nous créons deux grilles chacune avec une case occupée, une dans un coin et l'autre entourée par des cases vide. On vérifie ensuite que la première, celle avec la case dans le coin ne peut bougée que vers les directions opposées au coin quand à la deuxième, celle avec la case entourée de cases vides, doit pouvoir bougée dans tout les sens.
+  Avec la deuxième grille nous testons notre do\_move en bougeant vers le haut puis vers la gauche et si on peut bougé dans toute les directions sauf le haut aprés avoir bougé en haut puis que l'on peut bouggé partout sauf vers le haut et la gauche après avoir bougé vers la gauche alors le test est passer avec succés.
+  Enfin pour le add\_tile on fait autant de add\_tile que de case puis on vérifie que toute les cases sont occupées.
 \end{document}
-
 
