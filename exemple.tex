@@ -1,0 +1,95 @@
+\documentclass{article}
+\usepackage{color}
+\usepackage[T1]{fontenc} 
+\usepackage[utf8]{inputenc}
+\usepackage[francais]{babel}
+
+
+\title{Rapport de projet 2048}
+
+
+\author{Daubasse Biffert Gallardo}
+
+\begin{document}
+
+
+\maketitle
+\tableofcontents
+\textcolor{red}{\section{Présention du jeu 2048}}
+
+Le but du jeu est de fusionner des nombres ensemble (puissances de deux) afin d'atteindre le nombre ultime '2048' et gagner la partie.
+L'aire du jeu 2048 est une grille de quatre lignes par quatre colonnes avec donc 16 cellules carrées. Chaque cellule peut être vide ou contenir un nombre. Au début du jeu, il y a deux carrés (également appelés « tuiles ») avec un chiffre '2' ou un '4' suivant votre chance à l'intérieur. 
+
+Lorsque vous parvenez à faire entrer en collision 2 briques avec le même numéro dedans, elles fusionnent en une seule nouvelle brique dont le numéro sera l'addition des deux nombres précédents : 2+2=4, 4+4=8, ... 1024+1024=2048 !
+
+Pour déplacer les briques sur la grille, vous devez juste choisir une direction (haut, droite, bas ou gauche). Toutes les briques vont se déplacer dans la direction choisie, jusqu'à ce qu'elles fusionnent avec une brique de même valeur ou bien qu'elles soient bloquées par une brique avec un numéro différent. A chaque mouvement une tuile va aléatoirement apparaitre dans une case vide, cette tuile a une chance sur dix d'être égale a quatre sinon elle serra égale à deux.
+
+Ici on utilisera simplement les quatres flèches directionnelles du clavier pour déplacer les briques.
+
+\textcolor{red}{\section{Implémentation de la grille}}
+
+\subsection{Fonctions simples}
+
+\subsubsection{Valeur d'une tuile}
+
+On donne les coordonnées et la grille afin de directement retourner la valeur de la tuile situé dans cette grille et à ces coordonnée.
+
+\subsubsection{Initialiser une tuile}
+
+On donne les coordonnées et la grille afin de directement modifié la valeur de la tuile situé dans cette grille et à ces coordonnées.
+
+\subsubsection{Valeur du score}
+
+On donne la grille et la valeur du pointeur du score de la grille est retourner.
+
+
+\subsection{Structure}
+
+Nous avons choisis d'implémenter la grille par un pointeur de pointeur d'entier pour la grille et d'un entier représentant le score. Le pointeur nous sert à crée un tableau deux dimension qui servira de grille, nous avons choisis la solution du pointeur car elle permet de facilement étendre notre grille a une taille supérieure a quatre, le tableau deux dimensions quand a lui nous semblait la solution la plus naturelle pour crée une grille c'est pourquoi nous n'avons pas implémenter la grille avec un tableau une dimension.
+
+\subsection{Instanciation d'une grille}
+
+Pour l'instanciation, dans la fonction new\_grid, d'une grille on alloue la mémoire pour une stucture de grille puis on initialise le score a zéro et ensuite on alloue le tableau deux dimensions en initialisant chacune des tuiles a zéro. On retourne ensuite la structure nouvellement crée.
+
+\subsection{Suppression d'une grille}
+
+Pour supprimer une instance de grille nous prenons en argument une stucture de grille et parcourons le tableau deux dimensions et nous libèront la mémoire allouer pour les pointeurs du pointeur tiles de notre structure puis on libère la mémoire prise par le pointeur tiles lui même et enfin on libère la mémoire de notre instance de grille.
+
+\subsection{Copie d'une grille}
+
+Pour copier une grille nous prenons en paramètre deux grille, src la source et dst la destination, nous parcourons ensuite le tableau deux dimension afin de copier chaque tuiles de src et de la placer dans la grille de dst une fois cela fait on copie le score de src et on le place dans le score de dst.
+
+\subsection{Mouvement de la grille}
+\subsubsection{Possibilité de mouvement}
+
+Dans la fonction can\_move nous prenons en argument une grille et une direction. L'idée ici est de se dire que si une tuile peut bouger alors l'ensemble de la grille le peut c'est pourquoi nous initialisons une variable booléenne a faux qui serra ensuite modifié, au fur et a mesure du parcours de notre tableau, si, en prenant une dirction donnée, deux tuiles consécutives sont égales mais différentes de zéro ou si la tuiles vérifié est égale a zéro. On renvoie ensuite notre variable booléenne.
+
+\subsubsection{Mouvement}
+
+Pour le mouvement nous avons utilisée tois fonctions qui nous sont propre que sont array\_to\_grid, grid\_to\_array et compute\_array.
+
+\newenvironment{Passage d'un tableau à une grille et d'une grille à un tableau}{- Passage d'un tableau à une grille et d'une grille à un tableau:}
+
+\begin{Passage d'un tableau à une grille et d'une grille à un tableau}
+
+Ces fonctions servent à transformer une grille en une ligne (tableau 1D de taille size) selon les parametres de position donnés, c'est à dire le paramètre x donnés en argument, et sans prendre en compte les zeros ensuite pour repasser d'une grille a un tableau on retransforme donc notre ligne 1D en grille en combalnt les tuiles vides par des zéros.
+  
+\end{Passage d'un tableau à une grille et d'une grille à un tableau}
+
+\newenvironment{Calcul du score}{- Calcul du score:}
+
+\begin{Calcul du score}
+
+La fonction compute\_array prend un tableau 1D et une taille, initialise un score à zéro et ensuite parcours ce tableau et pour chaque cases consécutive et identique du tableau les fussionent ajoutant leur somme à score qui est ensuite renvoyer à la fin de la fonction.
+  
+\end{Calcul du score}
+
+En utilisant ces fonction il est donc plus facile de faire le do\_move puisque que nous transformons notre grille en tableau 1D puis calculons notre nouvelle grille et le score dans ce tableau pour enfin remettre ce tableau dans notre grille.
+
+\subsection{Ajout d'une tuile}
+
+Ici nous créons un tableau deux dimensions et copiont les cases vides de notre grille prise en argument pour ensuite choisir hasard parmis ces cases celle que l'on placera à deux (ou quatre suivant le rand()). Nous choisisons de faire un rand entre 0 et 1000 car en effet le rand() rend des valeurs plus stable s'il est pris entre 0 et 1. 
+
+\end{document}
+
+
