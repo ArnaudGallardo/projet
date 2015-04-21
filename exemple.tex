@@ -62,7 +62,7 @@ Pour copier une grille nous prenons en paramètre deux grille, src la source et 
 \subsection{Mouvement de la grille}
 \subsubsection{Possibilité de mouvement}
 
-Dans la fonction can\_move nous prenons en argument une grille et une direction. L'idée ici est de se dire que si une tuile peut bouger alors l'ensemble de la grille le peut c'est pourquoi nous initialisons une variable booléenne a faux qui serra ensuite modifié, au fur et a mesure du parcours de notre tableau, si, en prenant une dirction donnée, deux tuiles consécutives sont égales mais différentes de zéro ou si la tuiles vérifié est égale a zéro. On renvoie ensuite notre variable booléenne.
+Dans la fonction can\_move nous prenons en argument une grille et une direction. L'idée ici est de se dire que si une tuile peut bouger alors l'ensemble de la grille le peut c'est pourquoi nous initialisons une variable booléenne a faux qui serra ensuite modifié, au fur et a mesure du parcours de notre tableau, si, en prenant une dirction donnée, deux tuiles consécutives sont égales mais différentes de zéro ou si la tuiles vérifié est égale a zéro, c'est à dire que l'on a un trou entre notre tuile et ce qu'il y a aprés que ce soit une autre tuiles, le bord de la grille ou encore un zéro. On renvoie ensuite notre variable booléenne.
 
 \subsubsection{Mouvement}
 
@@ -88,7 +88,14 @@ En utilisant ces fonction il est donc plus facile de faire le do\_move puisque q
 
 \subsection{Ajout d'une tuile}
 
-Ici nous créons un tableau deux dimensions et copiont les cases vides de notre grille prise en argument pour ensuite choisir hasard parmis ces cases celle que l'on placera à deux (ou quatre suivant le rand()). Nous choisisons de faire un rand entre 0 et 1000 car en effet le rand() rend des valeurs plus stable s'il est pris entre 0 et 1. 
+Ici nous créons un tableau deux dimensions et copiont les cases vides de notre grille prise en argument pour ensuite choisir hasard parmis ces cases celle que l'on placera à deux (ou quatre suivant le rand()). Nous choisisons de faire un rand entre 0 et 1000 car en effet le rand() rend des valeurs plus stable s'il est pris entre 0 et 1.
+
+\subsection{Jouer un coup}
+Jouer un coup reviens à vérifier que l'on peut bouger dans la direction demander par l'utilisateur et si c'est le cas faire le mouvement avec le do\_move et ajouter une tuile.
+
+\subsection{Fin du jeu}
+
+Nous déétectons la fin du jeu quand aucune des directions n'est jouable, c'est à dire quand on ne peut plus bouger de tuile.
 
 \end{document}
 
