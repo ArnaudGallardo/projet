@@ -19,11 +19,11 @@ ___Lancer le jeu :___
 
 > faire ./main
 
-___Lancer le jeu graphique (avoir avant tout SDL1 et SDL_ttf d'installés):___
+___Lancer le jeu graphique (prérequis: SDL1 et SDL_ttf installés):___
 
-> Se placer dans le dossier racine
+> Se placer dans le dossier bin
 
-> faire make run-sdl
+> faire ./sdl
 
 ___Lancer les tests :___
 
