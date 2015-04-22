@@ -3,6 +3,7 @@
 \usepackage[T1]{fontenc} 
 \usepackage[utf8]{inputenc}
 \usepackage[francais]{babel}
+\usepackage{graphicx}
 
 
 \title{Rapport de projet 2048}
@@ -18,11 +19,18 @@
 \textcolor{red}{\section{Présention du jeu 2048}}
 
 Le but du jeu est de fusionner des nombres ensemble (puissances de deux) afin d'atteindre le nombre ultime '2048' et gagner la partie.
-L'aire du jeu 2048 est une grille de quatre lignes par quatre colonnes avec donc 16 cellules carrées. Chaque cellule peut être vide ou contenir un nombre. Au début du jeu, il y a deux carrés (également appelés « tuiles ») avec un chiffre '2' ou un '4' suivant votre chance à l'intérieur. 
 
-Lorsque vous parvenez à faire entrer en collision 2 briques avec le même numéro dedans, elles fusionnent en une seule nouvelle brique dont le numéro sera l'addition des deux nombres précédents : 2+2=4, 4+4=8, ... 1024+1024=2048 !
+L'aire du jeu 2048 est une grille de quatre lignes par quatre colonnes avec donc 16 cellules carrées.
 
-Pour déplacer les briques sur la grille, vous devez juste choisir une direction (haut, droite, bas ou gauche). Toutes les briques vont se déplacer dans la direction choisie, jusqu'à ce qu'elles fusionnent avec une brique de même valeur ou bien qu'elles soient bloquées par une brique avec un numéro différent. A chaque mouvement une tuile va aléatoirement apparaitre dans une case vide, cette tuile a une chance sur dix d'être égale a quatre sinon elle serra égale à deux.
+Chaque cellule peut être vide ou contenir un nombre. Au début du jeu, il y a deux carrés (également appelés « tuiles ») avec un chiffre '2' ou un '4' suivant votre chance à l'intérieur. 
+
+Lorsque vous parvenez à faire entrer en collision deux briques avec le même numéro dedans, elles fusionnent en une seule nouvelle brique dont le numéro sera l'addition des deux nombres précédents : 2+2=4, 4+4=8, ... 1024+1024=2048 !
+
+Pour déplacer les briques sur la grille, vous devez juste choisir une direction (haut, droite, bas ou gauche).
+
+Toutes les briques vont se déplacer dans la direction choisie, jusqu'à ce qu'elles fusionnent avec une brique de même valeur ou bien qu'elles soient bloquées par une brique avec un numéro différent.
+
+A chaque mouvement une tuile va aléatoirement apparaitre dans une case vide, cette tuile a une chance sur dix d'être égale a quatre sinon elle serra égale à deux.
 
 Ici on utilisera simplement les quatres flèches directionnelles du clavier pour déplacer les briques.
 
@@ -45,7 +53,13 @@ On donne la grille et la valeur du pointeur du score de la grille est retourner.
 
 \subsection{Structure}
 
-Nous avons choisis d'implémenter la grille par un pointeur de pointeur d'entier pour la grille et d'un entier représentant le score. Le pointeur nous sert à crée un tableau deux dimension qui servira de grille, nous avons choisis la solution du pointeur car elle permet de facilement étendre notre grille a une taille supérieure a quatre, le tableau deux dimensions quand a lui nous semblait la solution la plus naturelle pour crée une grille c'est pourquoi nous n'avons pas implémenter la grille avec un tableau une dimension.
+Nous avons choisis d'implémenter la grille par un pointeur de pointeur d'entier pour la grille et d'un entier représentant le score.
+
+Le pointeur nous sert à crée un tableau deux dimension qui servira de grille, nous avons choisis la solution du pointeur car elle permet de facilement étendre notre grille a une taille supérieure a quatre.
+
+Le tableau deux dimensions quand a lui nous semblait la solution la plus naturelle pour crée une grille.
+
+C'est pourquoi nous n'avons pas implémenter la grille avec un tableau une dimension.
 
 \subsection{Instanciation d'une grille}
 
@@ -62,28 +76,23 @@ Pour copier une grille nous prenons en paramètre deux grille, src la source et 
 \subsection{Mouvement de la grille}
 \subsubsection{Possibilité de mouvement}
 
-Dans la fonction can\_move nous prenons en argument une grille et une direction. L'idée ici est de se dire que si une tuile peut bouger alors l'ensemble de la grille le peut c'est pourquoi nous initialisons une variable booléenne a faux qui serra ensuite modifié, au fur et a mesure du parcours de notre tableau, si, en prenant une dirction donnée, deux tuiles consécutives sont égales mais différentes de zéro ou si la tuiles vérifié est égale a zéro, c'est à dire que l'on a un trou entre notre tuile et ce qu'il y a aprés que ce soit une autre tuiles, le bord de la grille ou encore un zéro. On renvoie ensuite notre variable booléenne.
+Dans la fonction can\_move nous prenons en argument une grille et une direction.
+
+L'idée ici est de se dire que si une tuile peut bouger alors l'ensemble de la grille le peut c'est pourquoi nous initialisons une variable booléenne a faux qui serra ensuite modifié, au fur et a mesure du parcours de notre tableau, si, en prenant une dirction donnée, deux tuiles consécutives sont égales mais différentes de zéro ou si la tuiles vérifié est égale a zéro, c'est à dire que l'on a un trou entre notre tuile et ce qu'il y a aprés que ce soit une autre tuiles, le bord de la grille ou encore un zéro.
+
+On renvoie ensuite notre variable booléenne.
 
 \subsubsection{Mouvement}
 
-Pour le mouvement nous avons utilisée tois fonctions qui nous sont propre que sont array\_to\_grid, grid\_to\_array et compute\_array.
+Pour le mouvement nous avons utilisée tois fonctions qui nous sont propre que sont array\_to\_grid, grid\_to\_array et compute\_array.\\
 
-\newenvironment{Passage d'un tableau à une grille et d'une grille à un tableau}{- Passage d'un tableau à une grille et d'une grille à un tableau:}
-
-\begin{Passage d'un tableau à une grille et d'une grille à un tableau}
-
+- Passage d'un tableau à une grille et d'une grille à un tableau:\par
 Ces fonctions servent à transformer une grille en une ligne (tableau 1D de taille size) selon les parametres de position donnés, c'est à dire le paramètre x donnés en argument, et sans prendre en compte les zeros ensuite pour repasser d'une grille a un tableau on retransforme donc notre ligne 1D en grille en combalnt les tuiles vides par des zéros. En fonction du sens dans lequel nous voulons faire notre mouvement nous inversons ou non notre tableau, à l'aide de la foncton invert\_array, afin de traiter toute les directions de la même manière.
-  
-\end{Passage d'un tableau à une grille et d'une grille à un tableau}
-
-\newenvironment{Calcul du score}{- Calcul du score:}
-
-\begin{Calcul du score}
-
+\\
+\\
+- Calcul du score:\par
 La fonction compute\_array prend un tableau 1D et une taille, initialise un score à zéro et ensuite parcours ce tableau et pour chaque cases consécutive et identique du tableau les fussionent ajoutant leur somme à score qui est ensuite renvoyer à la fin de la fonction.
-  
-\end{Calcul du score}
-
+\\ \\
 En utilisant ces fonction il est donc plus facile de faire le do\_move puisque que nous transformons notre grille en tableau 1D puis calculons notre nouvelle grille et le score dans ce tableau pour enfin remettre ce tableau dans notre grille.
 
 \subsection{Ajout d'une tuile}
@@ -101,20 +110,76 @@ Nous détectons la fin du jeu quand aucune des directions n'est jouable, c'est �
 
   \subsection{Fonctions générales}
   Dans test\_grid.c nous avons essayer de vérifier le plus de code possible automatiquement.
+  
   Pour nous aider nous avons crée une fonction result qui affiche, avec un code couleur, si le test est passer avec succés ou non.
+  
   D'abord on teste que new\_grid crée bien une grille vide, on vérifie donc que chaque tuile est nulle.
-  Ensuite on teste que la copy\_grid copie bien toute la grille c'est à dire le tableau deux dimension doit etre le même et le score lui aussi doit être copié. On crée donc deux grilles et vérifions à l'aide de la fonction equals du fichier grid\_utilities que chaque cases du tableau sont les même puis que les scores sont les même.
+  Ensuite on teste que la copy\_grid copie bien toute la grille c'est à dire le tableau deux dimension doit etre le même et le score lui aussi doit être copié.
+
+  On crée donc deux grilles et vérifions à l'aide de la fonction equals du fichier grid\_utilities que chaque cases du tableau sont les même puis que les scores sont les même.
   Le test du score se fait juste par l'anticipation du score de la grille, on fixe donc deux cases et on vérifie que le score de la grille est bien le bon.
-  Pour le test du can\_move nous créons deux grilles chacune avec une case occupée, une dans un coin et l'autre entourée par des cases vide. On vérifie ensuite que la première, celle avec la case dans le coin ne peut bougée que vers les directions opposées au coin quand à la deuxième, celle avec la case entourée de cases vides, doit pouvoir bougée dans tout les sens.
+
+  Pour le test du can\_move nous créons deux grilles chacune avec une case occupée, une dans un coin et l'autre entourée par des cases vide.
+
+  On vérifie ensuite que la première, celle avec la case dans le coin ne peut bougée que vers les directions opposées au coin quand à la deuxième, celle avec la case entourée de cases vides, doit pouvoir bougée dans tout les sens.
+  
   Avec la deuxième grille nous testons notre do\_move en bougeant vers le haut puis vers la gauche et si on peut bougé dans toute les directions sauf le haut aprés avoir bougé en haut puis que l'on peut bouggé partout sauf vers le haut et la gauche après avoir bougé vers la gauche alors le test est passer avec succés.
+
   Enfin pour le add\_tile on fait autant de add\_tile que de case puis on vérifie que toute les cases sont occupées.
+  
   \subsection{Fonction perso}
+  
   Afin d'éviter tout bug innatendu nous avons décider de tester nos fonctions qui se trouvent dans grid\_utilities.
+
   On remplit donc un tableau de zéro à GRID\_SIZE (qui est la taille de toute nos grilles) et on l'inverse à l'aide de notre fonction, on vérifie alors que le tableau est bien inversé.
+
   Pour tester la fonction grid\_to\_array on remplit trois cases d'une grille de façon à avoir les même valeur que le tableau précédent dans les cases du haut, on applique notre fonction a la grille et on vérifie que nos tableaux sont identique.
+
   Pour le calcul de la nouvelle grille après mouvement on prend notre tableau de grille et l'on vérifie que ses valeurs sont bien les bonnes, c'està dire qu'elles doivent être rangée dans l'orde décroissant.
+
   Pour finir la fonction array\_to\_grid on prend notre grille que l'on avait au préalable transformé en tableau que l'on retransforme en grille et on vérifie ensuite que la valeur des tuiles du haut corresponde au tableau qui nous sert de référence dans les autres fonctions. Si ce sont les même la fonction ne contient pas de bug.
   
   \textcolor{red}{\section{Stratégie pour automatiser la résolution du jeu}}
+  \subsection{Stratégie rapide (Moins de dix secondes de temps de calcul)}
+  Au premier abord la stratégie qui semble la plus simple est celle dite du coin qui consiste a choisir une direction, si le mouvement est impossible changer de direction puis retourner à la première, si les deux premières sont bloqué passer à une troisième et de même pour la quatrième direction.
+
+  Cette solution est très simple, ne demande aucun calcul et demande vraiment peu de temps à coder évidement elle est aussi trés peu fiable.
+
+  Nous avons donc opter pour une stratégie qui commence comme celle du coin mais qui quand le choix de la troisième direction arrive choisis à l'aide de la fonction score la direction à prendre. La fonction score attribut à une grille un score ,rapidement calculé puisqu'il suffit d'enchainer huit parcours de grille.
+
+  En effet à chaque parcours on pondère les valeurs de la grille ce qui nous aide à remplir un tableau dont on prendra l'indice de la valeur maximale.
+  \subsection{Stratégie lente (Moins de deux minutes de temps de calcul)}
+
+  Pour la strétégie longue nous avons opté pour une fonction récursive.
+
+  Nous avions à la base penser à implémenter une structure d'arbre mais celà était trop fastidieux et au final n'avais pas beaucoup moins de calcul à réaliser comparé à notre fonction récursive.
+
+  Nous avions donc eu l'idée de calculer chaque sous grille, c'est à dire les différentes grille possible en fonction des coups et des apparitions aléatoires des tuiles, de notre grille courante afin de choisir, parmis les quatres directions, la direction qui serait susceptible de donner la meilleure grille.
+\\
+  Pour choisir la meilleure grille nous attribuons encore une fois un score à ces grilles avec ces objectifs:
+  \newline
+  
+  - Créer une grille progressive : plus précisément, il faut faire en sorte que la valeur des cases augmente ou descende quelle que soit la direction. Ainsi, 2 - 4 - 8 - 16 est acceptable, tout comme 32 - 8 - 4 - 2. Mais 2 - 8 - 2 - 16 ne l'est pas (à cause de la 3eme case).
+  \\
+  \includegraphics[scale=0.5]{1.png}
+
+Chaque mouvement doit donc être choisi en fonction du résultat qu'il va produire : la grille sera-t-elle plus progressive après le mouvement qu'avant ? Si oui, on s'oriente sur un bon score. Si non, le score sera mauvais. L'idée ici est qu'il faut placer les valeurs les plus hautes sur les extérieurs pour éviter qu'une valeur faible se retrouve coincée entre deux valeurs hautes et ne puisse être fusionnée.
+
+- Gérer la régularité des cellules : pour pouvoir fusionner, les cases doivent comporter des valeurs identiques. Ainsi une suite 2 - 16 - 64 - 256 respecte la première règle (progressivité) mais aboutira à un échec car on ne pourra fusionner aucune case avec sa voisine.
+
+\includegraphics[scale=0.2]{image.png}
+
+Il faut donc respecter un second critère : la régularité. Et faire en sorte de ne pas avoir de rupture dans les séries. Entre créer une série 2 - 4 - 8 - 16 et créer une série 16 - 64 - 256 - 1024 on préférera donc la première.
+
+- Maximiser le nombre de cases libres sur le plateau : Si toutes les cases sont remplies, le jeu se termine sur une défaite, il faut donc faire en sorte d'avoir le plus de cases libres et privilégier les mouvements qui libèrent des cases.
+
+Entre deux mouvements, l'un libérant une case et l'autre n'en libérant pas, on donnera un meilleur score au premier.
+
+\textcolor{red}{\section{Affichage}}
+
+\subsection{Ncurses}
+
+\subsection{SDL}
+
 \end{document}
 
