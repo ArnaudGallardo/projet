@@ -1,0 +1,89 @@
+\documentclass{article}
+\usepackage{color}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[francais]{babel}
+\title{Rapport de projet 2048}
+\author{Daubasse Bifert Gallardo}
+\begin{document}
+\maketitle
+\tableofcontents
+\textcolor{red}{\section{Présention du jeu 2048}}
+Le but du jeu est de fusionner des nombres ensemble (puissances de deux) afin d'atteindre le nombre ultime '2048' et gagner la partie.
+L'aire du jeu 2048 est une grille de quatre lignes par quatre colonnes avec donc 16 cellules carrées. Chaque cellule peut être vide ou contenir un nombre. Au début du jeu, il y a deux carrés (également appelés « tuiles ») avec un chiffre '2' ou un '4' suivant votre chance à l'intérieur.
+Lorsque vous parvenez à faire entrer en collision 2 briques avec le même numéro dedans, elles fusionnent en une seule nouvelle brique dont le numéro sera l'addition des deux nombres précédents : 2+2=4, 4+4=8, ... 1024+1024=2048 !
+Pour déplacer les briques sur la grille, vous devez juste choisir une direction (haut, droite, bas ou gauche). Toutes les briques vont se déplacer dans la direction choisie, jusqu'à ce qu'elles fusionnent avec une brique de même valeur ou bien qu'elles soient bloquées par une brique avec un numéro différent. A chaque mouvement une tuile va aléatoirement apparaitre dans une case vide, cette tuile a une chance sur dix d'être égale a quatre sinon elle serra égale à deux.
+Ici on utilisera simplement les quatres flèches directionnelles du clavier pour déplacer les briques.
+\textcolor{red}{\section{Implémentation de la grille}}
+\subsection{Fonctions simples}
+\subsubsection{Valeur d'une tuile}
+On donne les coordonnées et la grille afin de directement retourner la valeur de la tuile situé dans cette grille et à ces coordonnée.
+\subsubsection{Initialiser une tuile}
+On donne les coordonnées et la grille afin de directement modifié la valeur de la tuile situé dans cette grille et à ces coordonnées.
+\subsubsection{Valeur du score}
+On donne la grille et la valeur du pointeur du score de la grille est retourner.
+\subsection{Structure}
+Nous avons choisis d'implémenter la grille par un pointeur de pointeur d'entier pour la grille et d'un entier représentant le score. Le pointeur nous sert à crée un tableau deux dimension qui servira de grille, nous avons choisis la solution du pointeur car elle permet de facilement étendre notre grille a une taille supérieure a quatre, le tableau deux dimensions quand a lui nous semblait la solution la plus naturelle pour crée une grille c'est pourquoi nous n'avons pas implémenter la grille avec un tableau une dimension.
+\subsection{Instanciation d'une grille}
+Pour l'instanciation, dans la fonction new\_grid, d'une grille on alloue la mémoire pour une stucture de grille puis on initialise le score a zéro et ensuite on alloue le tableau deux dimensions en initialisant chacune des tuiles a zéro. On retourne ensuite la structure nouvellement crée.
+\subsection{Suppression d'une grille}
+Pour supprimer une instance de grille nous prenons en argument une stucture de grille et parcourons le tableau deux dimensions et nous libèront la mémoire allouer pour les pointeurs du pointeur tiles de notre structure puis on libère la mémoire prise par le pointeur tiles lui même et enfin on libère la mémoire de notre instance de grille.
+\subsection{Copie d'une grille}
+Pour copier une grille nous prenons en paramètre deux grille, src la source et dst la destination, nous parcourons ensuite le tableau deux dimension afin de copier chaque tuiles de src et de la placer dans la grille de dst une fois cela fait on copie le score de src et on le place dans le score de dst.
+\subsection{Mouvement de la grille}
+\subsubsection{Possibilité de mouvement}
+Dans la fonction can\_move nous prenons en argument une grille et une direction. L'idée ici est de se dire que si une tuile peut bouger alors l'ensemble de la grille le peut c'est pourquoi nous initialisons une variable booléenne a faux qui serra ensuite modifié, au fur et a mesure du parcours de notre tableau, si, en prenant une dirction donnée, deux tuiles consécutives sont égales mais différentes de zéro ou si la tuiles vérifié est égale a zéro, c'est à dire que l'on a un trou entre notre tuile et ce qu'il y a aprés que ce soit une autre tuiles, le bord de la grille ou encore un zéro. On renvoie ensuite notre variable booléenne.
+\subsubsection{Mouvement}
+Pour le mouvement nous avons utilisée tois fonctions qui nous sont propre que sont array\_to\_grid, grid\_to\_array et compute\_array.
+\newenvironment{Passage d'un tableau à une grille et d'une grille à un tableau}{- Passage d'un tableau à une grille et d'une grille à un tableau:}
+\begin{Passage d'un tableau à une grille et d'une grille à un tableau}
+Ces fonctions servent à transformer une grille en une ligne (tableau 1D de taille size) selon les parametres de position donnés, c'est à dire le paramètre x donnés en argument, et sans prendre en compte les zeros ensuite pour repasser d'une grille a un tableau on retransforme donc notre ligne 1D en grille en combalnt les tuiles vides par des zéros. En fonction du sens dans lequel nous voulons faire notre mouvement nous inversons ou non notre tableau, à l'aide de la foncton invert\_array, afin de traiter toute les directions de la même manière.
+\end{Passage d'un tableau à une grille et d'une grille à un tableau}
+\newenvironment{Calcul du score}{- Calcul du score:}
+\begin{Calcul du score}
+La fonction compute\_array prend un tableau 1D et une taille, initialise un score à zéro et ensuite parcours ce tableau et pour chaque cases consécutive et identique du tableau les fussionent ajoutant leur somme à score qui est ensuite renvoyer à la fin de la fonction.
+\end{Calcul du score}
+En utilisant ces fonction il est donc plus facile de faire le do\_move puisque que nous transformons notre grille en tableau 1D puis calculons notre nouvelle grille et le score dans ce tableau pour enfin remettre ce tableau dans notre grille.
+\subsection{Ajout d'une tuile}
+Ici nous créons un tableau deux dimensions et copiont les cases vides de notre grille prise en argument pour ensuite choisir hasard parmis ces cases celle que l'on placera à deux (ou quatre suivant le rand()). Nous choisisons de faire un rand entre 0 et 1000 car en effet le rand() rend des valeurs plus stable s'il est pris entre 0 et 1.
+\subsection{Jouer un coup}
+Jouer un coup reviens à vérifier que l'on peut bouger dans la direction demander par l'utilisateur et si c'est le cas faire le mouvement avec le do\_move et ajouter une tuile.
+\subsection{Fin du jeu}
+Nous détectons la fin du jeu quand aucune des directions n'est jouable, c'est à dire quand on ne peut plus bouger de tuile.
+\textcolor{red}{\section{Test sur grid.c}}
+\subsection{Fonctions générales}
+Dans test\_grid.c nous avons essayer de vérifier le plus de code possible automatiquement.
+Pour nous aider nous avons crée une fonction result qui affiche, avec un code couleur, si le test est passer avec succés ou non.
+D'abord on teste que new\_grid crée bien une grille vide, on vérifie donc que chaque tuile est nulle.
+Ensuite on teste que la copy\_grid copie bien toute la grille c'est à dire le tableau deux dimension doit etre le même et le score lui aussi doit être copié. On crée donc deux grilles et vérifions à l'aide de la fonction equals du fichier grid\_utilities que chaque cases du tableau sont les même puis que les scores sont les même.
+Le test du score se fait juste par l'anticipation du score de la grille, on fixe donc deux cases et on vérifie que le score de la grille est bien le bon.
+Pour le test du can\_move nous créons deux grilles chacune avec une case occupée, une dans un coin et l'autre entourée par des cases vide. On vérifie ensuite que la première, celle avec la case dans le coin ne peut bougée que vers les directions opposées au coin quand à la deuxième, celle avec la case entourée de cases vides, doit pouvoir bougée dans tout les sens.
+Avec la deuxième grille nous testons notre do\_move en bougeant vers le haut puis vers la gauche et si on peut bougé dans toute les directions sauf le haut aprés avoir bougé en haut puis que l'on peut bouggé partout sauf vers le haut et la gauche après avoir bougé vers la gauche alors le test est passer avec succés.
+Enfin pour le add\_tile on fait autant de add\_tile que de case puis on vérifie que toute les cases sont occupées.
+\subsection{Fonction perso}
+Afin d'éviter tout bug innatendu nous avons décider de tester nos fonctions qui se trouvent dans grid\_utilities.
+On remplit donc un tableau de zéro à GRID\_SIZE (qui est la taille de toute nos grilles) et on l'inverse à l'aide de notre fonction, on vérifie alors que le tableau est bien inversé.
+Pour tester la fonction grid\_to\_array on remplit trois cases d'une grille de façon à avoir les même valeur que le tableau précédent dans les cases du haut, on applique notre fonction a la grille et on vérifie que nos tableaux sont identique.
+Pour le calcul de la nouvelle grille après mouvement on prend notre tableau de grille et l'on vérifie que ses valeurs sont bien les bonnes, c'està dire qu'elles doivent être rangée dans l'orde décroissant.
+Pour finir la fonction array\_to\_grid on prend notre grille que l'on avait au préalable transformé en tableau que l'on retransforme en grille et on vérifie ensuite que la valeur des tuiles du haut corresponde au tableau qui nous sert de référence dans les autres fonctions. Si ce sont les même la fonction ne contient pas de bug.
+
+Soucis rencontrés.
+Konstantin: Pour ce qui est de ma partie, je me suis attel\'e' \`a la SDL. J'ai dans un premier temps voulu utiliser la SDL2 pour les quelques optimisations qu'elle offrait (accélération matérielle, animations, commandes donnant lieu à de la factorisation indirectement). J'ai donc demandé à l'admin du CREMI qu'il l'installe sur les machines. Les commandes étant sensiblement différentes entre la version 1 et 2 de la SDL, j'ai eu quelques soucis à me servir de ces dernières (la doc étant un peu juste en terme d'exemples et d'explications). Malgré tout, un tutoriel sur la SDL était présent sur developpez.com. Ce dernier m'a permis de créer une première version simple et fonctionnelle de la SDL. Mais sans pouvoir bénéficier des avantages de la SDL2 car les fonctions qui m'intéressait n'étaient pas abordées. Pas très grave à ce niveau là. Le plus gros problème que j'ai eu est lorsque j'ai vu que je ne pouvais pas utiliser la SDL_ttf (librairie pour écrire du texte) avec SDL2. J'ai passé pas mal de temps à essayer de comprendre le problème et j'ai testé avec différentes version de la SDL_ttf sans réussite. Même une compilation manuelle s' est correctement passée sans aucun message d'erreur. Mais l'include de cette dernière retournai toujours une erreur. Après vérification, je possédais bel et bien la librairie dynamique (format .so) mais la première ligne commençait par un include de la SDL1 (uniquement). Bien sûr, toute la SDL_ttf était donc uniquement utilisable avec la SDL1 (conclusion à laquelle j'en suis arrivé malgré moi). Même résultats avec des tests sur les machines du CREMI. J'ai donc décidé d'arrêter d'essayer avec la SDL2 et j'ai installé la première version de la SDL et de la SDL_ttf. Plus aucun problème. De plus, il y avait un très bon tutoriel sur le Site du Zéro pour tout ce dont j'avais besoin pour mon projet. J'ai donc pu finir la partie écrite de mon interface et pouvoir afficher le score.
+
+Quelques choses qui auraient pu être modifiées/améliorées par rapport à la SDL.
+On s'est posé la question de comment on pouvait améliorer la SDL. Hormis la redondance de code, on a optimisé l'écriture des images utilisés par la grille par un calcul sur une chaîne de caractère. Pour ne pas avoir à réecrire chaque ligne d'image appelée. 
+On s'est dit que des animations pouvaient être sympas mais au final, avec la SDL1 qui s'est imposée et avec l'éventuel problème que cela pouvait peut-être ralentir le programme en entier et aussi la question de ce que l'on aurait pu animer, on a décidé d'abandonner.
+La possibilité de mettre une surface cliquable qui faisait office de bouton (idée donnée par Candice Bentejac) pouvait être intéressante. Mais vu que l'on avait déjà un raccourci clavier pour, on n'a pas jugé utile d'avoir une redondance. 
+Quelque chose que l'on aurait voulu faire était de créer un genre de tableau des meilleurs scores en fin de game au cours duquel, l'utilisateur aurait pu rentrer son pseudo associé à son score de 2048 et l'envoyer dans un fichier. Au besoin, lors de la pression d'une touche, le fichier aurait été trié et les 10 meilleurs résultats auraient pu être envoyés sur l'interface. Le souci n'était pas tant la difficulté du code (une vidéo sur YouTube présentait une technique d'input dans SDL) mais plutôt le manque de temps. Cela aurait malgré tout ajouté une plus-value pour l'utilisateur qui aurait pu vouloir avoir un suivi de ses scores.
+
+Répartition du travail.
+La première partie du travail à savoir le 2048 en terminal a été majoritairement faite par Arnaud Daubasse qui a eu l'initiative de commencer le travail dans son coin à peine le projet a été expliqué en amphi. Il a ainsi réussi à faire une version fonctionnelle de ncurses et avec peu de bugs. Ensuite, Konstantin est revenu de sa convalensce et le le travail effectué lui a été expliqué. Par la suite, certains bugs ont été corrigés et le travail s'est réparti de la façon suivante: Arnaud et Timothé devaient se charger de l'IA tandis que Konstantin devait se charger de la SDL. De temps en temps, les membres du trinôme se voyaient pour partager leur avis et s'aider mutuellement. Cela a surtout été le cas lors des séances de TD et aussi en conversation vocale lors de l'évaluation des autres groupes, ce qui nous a permis de confronter nos différents points de vue sur les bouts de code que l'on avait chacun analysé chez soi.
+
+Outils utilisés.
+Lors de notre projet, nous avons constaté l'intérêt d'utiliser un gestionnaire de version, ce dernier nous a grandement facilité le travail pour ne pas perdre le suivi et ne pas avoir de problèmes lors 
+
+\textcolor{red}{\section{Stratégie pour automatiser la résolution du jeu}
+
+
+
+\end{document}
