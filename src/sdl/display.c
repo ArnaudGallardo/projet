@@ -65,8 +65,8 @@ void eventHappens(grid g){
 
 void draw(){
     SDL_Init(SDL_INIT_VIDEO); // initiate the SDL
-    SDL_Surface *screen = NULL, *textTitle = NULL, *textGoal = NULL, *imageTile = NULL, *background = NULL, *textScore = NULL, *score = NULL, *resetBackground = NULL, *textHowTo = NULL, *textGameOver = NULL;
-    SDL_Rect positionTile, positionTitle, positionGoal, positionBackScore,positionTextScore, positionScore, positionHowTo, positionGameOver;
+    SDL_Surface *screen = NULL, *textTitle = NULL, *textGoal = NULL, *imageTile = NULL, *background = NULL, *textScore = NULL, *score = NULL, *resetBackground = NULL, *textStrat = NULL, *textHowTo = NULL, *textGameOver = NULL;
+    SDL_Rect positionTile, positionTitle, positionGoal, positionBackScore, positionTextScore, positionScore, positionHowTo, positionGameOver, positionStrat;
     SDL_Color colorWhite = {255, 255, 255}, colorTitle = {119, 110, 101}, colorTextScore = {216, 205, 193};
     TTF_Font *font = NULL;
     char tileName[15], charScore[20];
@@ -111,6 +111,11 @@ void draw(){
     positionHowTo.y = 610;
     textHowTo = TTF_RenderText_Blended(font, "Shortcuts: Q [Quit], R [Restart] and directionnal arrows.", colorTitle);
     SDL_BlitSurface(textHowTo, NULL, screen, &positionHowTo);
+
+    positionStrat.x = 100;
+    positionStrat.y = 630;
+    textStrat = TTF_RenderText_Blended(font, "Press F for fast strat and S for the slow one.", colorTitle);
+    SDL_BlitSurface(textStrat, NULL, screen, &positionStrat);
     font = TTF_OpenFont("../font/font.ttf", 30);
 
     while(continueToPlay){
