@@ -164,7 +164,7 @@ Même résultats avec des tests sur les machines du CREMI. J'ai donc décidé d'
 
 J'ai donc pu finir la partie écrite de mon interface et pouvoir afficher le score.
 
-Quelques choses qui auraient pu être modifiées/améliorées par rapport à la SDL.
+\subsection{Améliorations possibles}Quelques choses qui auraient pu être modifiées/améliorées par rapport à la SDL.
 On s'est posé la question de comment on pouvait améliorer la SDL.
 
 Hormis la redondance de code, on a optimisé l'écriture des images utilisés par la grille par un calcul sur une chaîne de caractère. Pour ne pas avoir à réecrire chaque ligne d'image appelée. 
@@ -174,6 +174,12 @@ La possibilité de mettre une surface cliquable qui faisait office de bouton (id
 
 Mais vu que l'on avait déjà un raccourci clavier pour, on n'a pas jugé utile d'avoir une redondance. 
 Quelque chose que l'on aurait voulu faire était de créer un genre de tableau des meilleurs scores en fin de game au cours duquel, l'utilisateur aurait pu rentrer son pseudo associé à son score de 2048 et l'envoyer dans un fichier. Au besoin, lors de la pression d'une touche, le fichier aurait été trié et les 10 meilleurs résultats auraient pu être envoyés sur l'interface. Le souci n'était pas tant la difficulté du code (une vidéo sur YouTube présentait une technique d'input dans SDL) mais plutôt le manque de temps. Cela aurait malgré tout ajouté une plus-value pour l'utilisateur qui aurait pu vouloir avoir un suivi de ses scores.
+
+Enfin bien sûr, on aurait pu factoriser le code surtout l'allocation de mémoire dans la partie SDL: beaucoup de surfaces ont été allouées. On aurait peut-être pu en réutiliser quelqu'uns mais par soucis de cohérence, on a préféré les laisser pour des raisons de modularité.
+
+Sur le plan de la lisibilité du code, on aurait pu commenter davantage le grid.c, peut-être le main.c (même s'il y avait essentiellement pas mal de partie graphique) et surtout la stratégie fast.c qui est plutôt indigeste.
+
+Sur le plan de la performance, on aurait pu avoir une IA plus puissante (la rapide surtout) et mieux s'organiser au niveau des fichiers qui sont plutôt chaotiques avec du code dans tous les sens.
 
 \subsection{Répartition du travail}
 La première partie du travail à savoir le 2048 en terminal a été majoritairement faite par Arnaud Daubasse qui a eu l'initiative de commencer le travail dans son coin à peine le projet a été expliqué en amphi. Il a ainsi réussi à faire une version fonctionnelle de ncurses et avec peu de bugs.
@@ -187,8 +193,10 @@ Cela a surtout été le cas lors des séances de TD et aussi en conversation voc
 \subsection{Outils utilisés}
 Lors de notre projet, nous avons constaté l'intérêt d'utiliser un gestionnaire de version, ce dernier nous a grandement facilité le travail pour ne pas perdre le suivi et ne pas avoir de problèmes lors 
 des push et avoir une solution de secours dans lequel ou un fichier serait corrompu ou bien perdu.
+
 On a forcément utilisé Emacs dont l'utilité n'est plus à démontrer et qui nous a été très utile.
-Meld nous a été utile lors des conflits entre deux fichiers différents.
+
+Meld nous a été utile lors des conflits entre deux fichiers différents. Même si l'on n'en a pas eu beaucoup.
 
 
 \end{document}
