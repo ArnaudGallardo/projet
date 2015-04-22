@@ -10,6 +10,7 @@ clean:
 	rm -f bin/sdl
 	rm -f lib/libgrid.a
 	rm -f include/grid.h
+	rm -rf include
 	$(MAKE) -C src clean
 
 test:

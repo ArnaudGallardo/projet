@@ -6,11 +6,13 @@
 #include <grid_utilities.h>
 #include <SDL/SDL.h>
 #include <SDL/SDL_ttf.h>
+#include <strategy.h>
 
 bool continueToPlay = true;
 void eventHappens(grid g);
 void draw();
 SDL_Event event;
+bool turnFast = false, turnSlow = false;
 
 void eventHappens(grid g){
     SDL_WaitEvent(&event);
@@ -28,6 +30,12 @@ void eventHappens(grid g){
                     g = new_grid();
                     add_tile(g);
                     add_tile(g);
+                    break;
+                case SDLK_f:
+                    turnFast = true;
+                    break;
+                case SDLK_s:
+                    turnSlow = true;
                     break;
                 case SDLK_UP:
                     if(can_move(g, UP))
@@ -126,15 +134,20 @@ void draw(){
             }
         }
 
-        positionScore.x = 380;
-        positionScore.y = 110;
-        SDL_FillRect(resetBackground, NULL, SDL_MapRGB(screen->format, 187, 173, 160));
-        SDL_BlitSurface(resetBackground, NULL, screen, &positionScore);
+    positionScore.x = 380;
+    positionScore.y = 110;
+    SDL_FillRect(resetBackground, NULL, SDL_MapRGB(screen->format, 187, 173, 160));
+    SDL_BlitSurface(resetBackground, NULL, screen, &positionScore);
 
-        sprintf(charScore, "%lu", grid_score(g));
-        score = TTF_RenderText_Blended(font, charScore, colorWhite);
-        SDL_BlitSurface(score, NULL, screen, &positionScore);
-        SDL_Flip(screen);
+    sprintf(charScore, "%lu", grid_score(g));
+    score = TTF_RenderText_Blended(font, charScore, colorWhite);
+    SDL_BlitSurface(score, NULL, screen, &positionScore);
+    SDL_Flip(screen);
+    if(turnFast)
+        play(g,fast(A2_bifert_daubasse_gallardo_fast(),g));
+    else if(turnSlow)
+        play(g,gps_arnaud(A2_bifert_daubasse_gallardo_efficient(),g));
+    else
         eventHappens(g);
     }
 

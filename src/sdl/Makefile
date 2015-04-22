@@ -2,7 +2,7 @@ CC= gcc
 
 CFLAGS= -g -Wall -std=c99
 CPPFLAGS= -I ../../include
-LDFLAGS= -lm -L ../../lib -lgrid -lSDL -lSDL_ttf -lncurses
+LDFLAGS= -Wl,-rpath=../lib -lm -L ../../lib -lgrid -lSDL -lSDL_ttf -lA2_bifert_daubasse_gallardo_fast -lA2_bifert_daubasse_gallardo_efficient
 VPATH = ../../include
 OBJ= display.o
 
