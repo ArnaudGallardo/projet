@@ -2,165 +2,153 @@
 #include <stdbool.h>
 #include <stdlib.h>
 #include <math.h>
-#include <time.h>
 #include <grid.h>
 #include <grid_utilities.h>
-#include <SDL2/SDL.h>
+#include <SDL/SDL.h>
+#include <SDL/SDL_ttf.h>
 
-bool jouer = true;
-int goFullscreen = false;
-int * pGoFullscreen = &goFullscreen;
-void eventHappens();
+bool continueToPlay = true;
+void eventHappens(grid g);
 void draw();
 SDL_Event event;
 
-void eventHappens(){
-    while(SDL_PollEvent(&event)){ // Fonction non bloquante, s'exe si utilisé mais sans mettre en pause le programme
-        switch(event.type){
-            case SDL_QUIT:
-                jouer = false;
+void eventHappens(grid g){
+    SDL_WaitEvent(&event);
+    switch(event.type){
+        case SDL_QUIT: // when the window is closed by the cross
+            continueToPlay = false;
+            break;
+        case SDL_KEYDOWN:
+            switch(event.key.keysym.sym){ // when a key is pressed
+                case SDLK_q:
+                    continueToPlay = false;
+                    break;
+                case SDLK_r:
+                    delete_grid(g);
+                    g = new_grid();
+                    add_tile(g);
+                    add_tile(g);
+                    break;
+                case SDLK_UP:
+                    if(can_move(g, UP))
+                      play(g,UP);
+                    break;
+                case SDLK_DOWN:
+                    if(can_move(g, DOWN))
+                      play(g,DOWN);
+                    break;
+                case SDLK_LEFT:
+                    if(can_move(g, LEFT))
+                      play(g,LEFT);
+                    break;
+                case SDLK_RIGHT:
+                    if(can_move(g, RIGHT))
+                      play(g,RIGHT);
+                    break;
                 break;
-            case SDL_KEYDOWN:
-                switch(event.key.keysym.sym){
-                    case SDLK_q:
-                        jouer = false;
-                        break;
-                    case SDLK_t:
-                        fprintf(stdout, "test\n");
-                        break;
-                    // case SDLK_f:
-                        // once = false;
-                        // *pGoFullscreen = true;
-                        // break;
-                        // case SDLK_m:
-                        //     SDL_Rect dest2 = {450, 150, pSprite->w, pSprite->h};
-                        //     SDL_RenderCopy(pRenderer,pTexture,NULL,&dest2); // Copie du sprite grâce au SDL_Renderer
-                        //     break;
-                    // case SDLK_UP:
-                    //     if(can_move(g, UP))
-                    //       play(g,UP);
-                    //     break;
-                    // case SDLK_DOWN:
-                    //     if(can_move(g, DOWN))
-                    //       play(g,DOWN);
-                    //     break;
-                    // case SDLK_LEFT:
-                    //     if(can_move(g, LEFT))
-                    //       play(g,LEFT);
-                    //     break;
-                    // case SDLK_RIGHT:
-                    //     if(can_move(g, RIGHT))
-                    //       play(g,RIGHT);
-                    //     break;
-                    }
-        }
+                default:
+                    break;
+            }
+        default:
+            break;
     }
 }
 
 void draw(){
-    SDL_Window* pWindow;
-    SDL_Init(SDL_INIT_VIDEO);
-    //pWindow = SDL_SetVideoMode(1920, 1080, 32, SDL_WINDOW_RESIZABLE);
-    pWindow = SDL_CreateWindow("2048",SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 800, 800, SDL_WINDOW_RESIZABLE);
-    // penser à vérifier les mallocs...
+    SDL_Init(SDL_INIT_VIDEO); // initiate the SDL
+    SDL_Surface *screen = NULL, *textTitle = NULL, *textGoal = NULL, *imageTile = NULL, *background = NULL, *textScore = NULL, *score = NULL, *resetBackground = NULL, *textHowTo = NULL, *textGameOver = NULL;
+    SDL_Rect positionTile, positionTitle, positionGoal, positionBackScore,positionTextScore, positionScore, positionHowTo, positionGameOver;
+    SDL_Color colorWhite = {255, 255, 255}, colorTitle = {119, 110, 101}, colorTextScore = {216, 205, 193};
+    TTF_Font *font = NULL;
+    char tileName[15], charScore[20];
 
+    screen = SDL_SetVideoMode(600, 800, 32, SDL_HWSURFACE | SDL_DOUBLEBUF | SDL_RESIZABLE); // name (resizable) of the screen
+    SDL_WM_SetCaption("2048 - The Game", NULL);
+    TTF_Init(); // initiate the SDL_ttf
+    font = TTF_OpenFont("font.ttf", 60);
 
-    if( pWindow ){
-        SDL_Renderer *pRenderer = SDL_CreateRenderer(pWindow,-1,SDL_RENDERER_ACCELERATED); // Création d'un SDL_Renderer utilisant l'accélération matérielle
-        SDL_Surface *pSprite;
-        char name_tile[15];
+    grid g = new_grid();
+    add_tile(g);
+    add_tile(g);
 
-        grid g = new_grid();
-        add_tile(g);
-        add_tile(g);
+    SDL_FillRect(screen, NULL, SDL_MapRGB(screen->format, 250, 248, 239)); // background of the GUI
+    positionTitle.x = 100;
+    positionTitle.y = 90;
+    textTitle = TTF_RenderText_Blended(font, "2048", colorTitle);
+    SDL_BlitSurface(textTitle, NULL, screen, &positionTitle);
 
-        while (jouer){
-            for(int i=0; i<GRID_SIDE; i++){
-                for(int j=0; j<GRID_SIDE; j++){
-                    //set_tile(g, 0, 0, 11);
+    background = SDL_CreateRGBSurface(SDL_HWSURFACE, 150, 65, 32, 0, 0, 0, 0);
+    resetBackground = SDL_CreateRGBSurface(SDL_HWSURFACE, 100, 40, 32, 0, 0, 0, 0); // updates the score
 
-                    // eventHappens();
-                    // problème de variable locale ?
+    positionBackScore.x = 350;
+    positionBackScore.y = 90;
+    SDL_FillRect(background, NULL, SDL_MapRGB(screen->format, 187, 173, 160)); 
+    SDL_BlitSurface(background, NULL, screen, &positionBackScore);
+    
+    font = TTF_OpenFont("font.ttf", 15); // the font and it's size
+    positionGoal.x = 100;
+    positionGoal.y = 160;
+    textGoal = TTF_RenderText_Blended(font, "Try to reach the highest tile you can !", colorTitle);
+    SDL_BlitSurface(textGoal, NULL, screen, &positionGoal);
 
+    
+    font = TTF_OpenFont("font.ttf", 15);
+    positionTextScore.x = 400;
+    positionTextScore.y = 95;
+    textScore = TTF_RenderText_Blended(font, "Score", colorTextScore);
+    SDL_BlitSurface(textScore, NULL, screen, &positionTextScore);
 
-                    while(SDL_PollEvent(&event)){ // Fonction non bloquante, s'exe si utilisé mais sans mettre en pause le programme
-                        switch(event.type){
-                            case SDL_QUIT:
-                                jouer = false;
-                                break;
-                            case SDL_KEYDOWN:
-                                switch(event.key.keysym.sym){
-                                    case SDLK_q:
-                                        jouer = false;
-                                        break;
-                                    case SDLK_a:
-                                        add_tile(g);
-                                        fprintf(stdout, "ajout d'une nouvelle tuile\n");
-                                        break;
-                                    // case SDLK_f:
-                                        // once = false;
-                                        // *pGoFullscreen = true;
-                                        // break;
-                                        // case SDLK_m:
-                                        //     SDL_Rect dest2 = {450, 150, pSprite->w, pSprite->h};
-                                        //     SDL_RenderCopy(pRenderer,pTexture,NULL,&dest2); // Copie du sprite grâce au SDL_Renderer
-                                        //     break;
-                                    case SDLK_UP:
-                                        if(can_move(g, UP))
-                                          play(g,UP);
-                                        break;
-                                    case SDLK_DOWN:
-                                        if(can_move(g, DOWN))
-                                          play(g,DOWN);
-                                        break;
-                                    case SDLK_LEFT:
-                                        if(can_move(g, LEFT))
-                                          play(g,LEFT);
-                                        break;
-                                    case SDLK_RIGHT:
-                                        if(can_move(g, RIGHT))
-                                          play(g,RIGHT);
-                                        break;
-                                    }
-                        }
-                    }
+    positionHowTo.x = 100;
+    positionHowTo.y = 610;
+    textHowTo = TTF_RenderText_Blended(font, "Shortcuts: Q [Quit], R [Restart] and directionnal arrows.", colorTitle);
+    SDL_BlitSurface(textHowTo, NULL, screen, &positionHowTo);
+    font = TTF_OpenFont("font.ttf", 30);
 
-                    sprintf(name_tile, "../images/%d.bmp", (int)pow(2,get_tile(g,i,j)));
-                    pSprite = SDL_LoadBMP(name_tile);
-                    // cette ligne se débrouille pour aller chercher un fichier image après avoir modfié une
-                    // string, par ex pour get_tile = 0, ça fait 2^0 = ../images/1.bmp
-                    SDL_Texture* pTexture = SDL_CreateTextureFromSurface(pRenderer, pSprite);
-                    // SDL_Rect dest = { i - pSprite->w/2, j - pSprite->h/2, pSprite->w, pSprite->h};
-                    SDL_Rect dest = { 200 + i*100, 200 + j*100, pSprite->w, pSprite->h};
-                    SDL_RenderCopy(pRenderer, pTexture, NULL, &dest);
-                    SDL_RenderPresent(pRenderer);
-                    SDL_DestroyTexture(pTexture);
+    while(continueToPlay){
+        for(int i=0; i<GRID_SIDE; i++){
+            for(int j=0; j<GRID_SIDE; j++){
+                sprintf(tileName, "../images/%d.bmp", (int)pow(2,get_tile(g,i,j)));
+                imageTile = SDL_LoadBMP(tileName);
+                positionTile.x = 100 + 100* i; // base positionning
+                positionTile.y = 200 + 100* j;
+                SDL_BlitSurface(imageTile, NULL, screen, &positionTile);
+                SDL_Flip(screen);
+
+                if(get_tile(g, i, j) == 11 || game_over(g)){ // maximal tile which can be reached or unable to move
+                    positionGameOver.x = 100;
+                    positionGameOver.y = 650;
+                    textGameOver = TTF_RenderText_Blended(font, "Game Over !", colorTitle);
+                    SDL_BlitSurface(textGameOver, NULL, screen, &positionGameOver);
+                    SDL_Flip(screen);
+                    SDL_Delay(300);
+                    continueToPlay = false;
                 }
             }
-            SDL_FreeSurface(pSprite);
         }
+
+        positionScore.x = 380;
+        positionScore.y = 110;
+        SDL_FillRect(resetBackground, NULL, SDL_MapRGB(screen->format, 187, 173, 160));
+        SDL_BlitSurface(resetBackground, NULL, screen, &positionScore);
+
+        sprintf(charScore, "%lu", grid_score(g));
+        score = TTF_RenderText_Blended(font, charScore, colorWhite);
+        SDL_BlitSurface(score, NULL, screen, &positionScore);
+        SDL_Flip(screen);
+        eventHappens(g);
     }
 
+    TTF_CloseFont(font);
+    TTF_Quit(); // leaving the SDL_ttf
+    SDL_FreeSurface(textTitle); SDL_FreeSurface(textGoal); SDL_FreeSurface(imageTile); SDL_FreeSurface(background); SDL_FreeSurface(textScore); SDL_FreeSurface(score); SDL_FreeSurface(resetBackground); SDL_FreeSurface(textHowTo); SDL_FreeSurface(textGameOver);
+    SDL_Quit(); // free of screen and free of all the others above
 }
 
 int main(int argc, char** argv){
-
     if (SDL_Init(SDL_INIT_VIDEO) != 0 ){
-        fprintf(stdout,"Échec de l'initialisation de la SDL (%s)\n",SDL_GetError());
+        fprintf(stdout,"Fail starting the SDL... (%s)\n",SDL_GetError());
         return -1;
     }
-
-    // partie test pour le highscore avec l'input et l'output dans un fichier
-
-    // int tableau[5] = {0, 1, 0, 1, 1}, i = 0;
-    // for (i = 0 ; i < 5 ; i++){
-    //     if (tableau[i]==0)
-    //         printf("nice :D\n");
-    //     else if(tableau[i]==1)
-    //         printf("Num 1 là !\n");
-    //     //printf("%d\n", tableau[i]);
-    // }
-
     draw();
     return EXIT_SUCCESS ;   
 }

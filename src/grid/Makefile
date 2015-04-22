@@ -18,7 +18,8 @@ files.txt: $(SOURCES)
 
 .PHONY: clean
 clean:
-	-rm -f *.o $(OUTFILES)
+	rm -f *.o $(OUTFILES)
+	rm files.txt
 
 test:
 	./test-grid

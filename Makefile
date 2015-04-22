@@ -12,5 +12,5 @@ clean:
 test:
 	$(MAKE) -C src test
 
-test-sdl:
-	$(MAKE) -C src test-sdl
+run-sdl:
+	$(MAKE) -C src run-sdl

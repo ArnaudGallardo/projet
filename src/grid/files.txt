@@ -1,3 +1,0 @@
-grid.o: grid.c grid.h grid_utilities.h
-grid_utilities.o: grid_utilities.c grid.h grid_utilities.h
-test-grid.o: test-grid.c grid.h grid_utilities.h

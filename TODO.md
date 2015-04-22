@@ -14,9 +14,7 @@
 - [x] Create a strategy @strategy.c @strategy.h, 23-02-2015, (A)
 
 ## SDL
-
-- [ ] Mettre un peu de texte (dont le score), (A)
-- [ ] Se charger de la partie highscore (input+output), (A)
+- [x] Mettre un peu de texte (dont le score), (A)
 
 ## Draw
 - [x] Make an universal library @draw.h, 12-02-2015, (A)
@@ -27,4 +25,3 @@
 ## Bug
 - [ ] Restart refrsh only the first digit @main.c, 12-02-2015, (B)
 - [ ] Bug with up in gps? @fast.c, 12-02-2015, (A)
-- [ ] Bug du prof @grid.c, 12-02-2015, (A)

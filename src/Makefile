@@ -27,5 +27,5 @@ install:
 test:
 	$(MAKE) -C grid test
 
-test-sdl:
-	$(MAKE) -C sdl test
+run-sdl:
+	$(MAKE) -C sdl run-sdl
