@@ -28,5 +28,3 @@ ___Lancer le jeu graphique (avoir avant tout SDL1 et SDL_ttf d'installés):___
 ___Lancer les tests :___
 
 > make test
-
-> make test-sdl
