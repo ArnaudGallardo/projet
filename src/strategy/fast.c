@@ -167,7 +167,7 @@ dir fast(strategy s, grid g){
     sc2=score(g3);
     delete_grid(g3);
   }
-  if(sc2>sc3)
+  if(sc2>sc3 || !can_move(g,3))
     return 2;
   return 3;
 }
