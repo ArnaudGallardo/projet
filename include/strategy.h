@@ -36,5 +36,9 @@ struct strategy_s
  * Naively frees the <strat> pointer.
  */
 extern void free_memless_strat (strategy strat);
+extern strategy A2_bifert_daubasse_gallardo_fast();
+extern strategy A2_bifert_daubasse_gallardo_efficient();
+extern dir fast(strategy s, grid g);
+extern dir gps_arnaud(strategy s,grid g);
 
 #endif /* STRATEGY_H_ */
