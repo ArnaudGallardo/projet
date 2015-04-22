@@ -161,13 +161,13 @@ Nous détectons la fin du jeu quand aucune des directions n'est jouable, c'est �
   
   - Créer une grille progressive : plus précisément, il faut faire en sorte que la valeur des cases augmente ou descende quelle que soit la direction. Ainsi, 2 - 4 - 8 - 16 est acceptable, tout comme 32 - 8 - 4 - 2. Mais 2 - 8 - 2 - 16 ne l'est pas (à cause de la 3eme case).
   \\
-  \includegraphics[scale=0.5]{1.png}
+  \includegraphics[scale=0.5]{../1.png}
 
 Chaque mouvement doit donc être choisi en fonction du résultat qu'il va produire : la grille sera-t-elle plus progressive après le mouvement qu'avant ? Si oui, on s'oriente sur un bon score. Si non, le score sera mauvais. L'idée ici est qu'il faut placer les valeurs les plus hautes sur les extérieurs pour éviter qu'une valeur faible se retrouve coincée entre deux valeurs hautes et ne puisse être fusionnée.
 
 - Gérer la régularité des cellules : pour pouvoir fusionner, les cases doivent comporter des valeurs identiques. Ainsi une suite 2 - 16 - 64 - 256 respecte la première règle (progressivité) mais aboutira à un échec car on ne pourra fusionner aucune case avec sa voisine.
 
-\includegraphics[scale=0.2]{image.png}
+\includegraphics[scale=0.2]{../image.png}
 
 Il faut donc respecter un second critère : la régularité. Et faire en sorte de ne pas avoir de rupture dans les séries. Entre créer une série 2 - 4 - 8 - 16 et créer une série 16 - 64 - 256 - 1024 on préférera donc la première.
 
