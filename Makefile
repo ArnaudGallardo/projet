@@ -2,6 +2,7 @@ install:
 	$(MAKE) -C src/grid
 	$(MAKE) -C src/strategy
 	$(MAKE) -C src install
+	$(MAKE) -C src/sdl install
 
 clean:
 	rm -f bin/main

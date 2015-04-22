@@ -17,3 +17,6 @@ clean:
 
 run-sdl: display
 	./display
+
+install:
+	mv display ../../bin/.

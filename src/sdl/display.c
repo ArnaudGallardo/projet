@@ -65,7 +65,7 @@ void draw(){
     screen = SDL_SetVideoMode(600, 800, 32, SDL_HWSURFACE | SDL_DOUBLEBUF | SDL_RESIZABLE); // name (resizable) of the screen
     SDL_WM_SetCaption("2048 - The Game", NULL);
     TTF_Init(); // initiate the SDL_ttf
-    font = TTF_OpenFont("font.ttf", 60);
+    font = TTF_OpenFont("../font/font.ttf", 60);
 
     grid g = new_grid();
     add_tile(g);
@@ -85,14 +85,14 @@ void draw(){
     SDL_FillRect(background, NULL, SDL_MapRGB(screen->format, 187, 173, 160)); 
     SDL_BlitSurface(background, NULL, screen, &positionBackScore);
     
-    font = TTF_OpenFont("font.ttf", 15); // the font and it's size
+    font = TTF_OpenFont("../font/font.ttf", 15); // the font and it's size
     positionGoal.x = 100;
     positionGoal.y = 160;
     textGoal = TTF_RenderText_Blended(font, "Try to reach the highest tile you can !", colorTitle);
     SDL_BlitSurface(textGoal, NULL, screen, &positionGoal);
 
     
-    font = TTF_OpenFont("font.ttf", 15);
+    font = TTF_OpenFont("../font/font.ttf", 15);
     positionTextScore.x = 400;
     positionTextScore.y = 95;
     textScore = TTF_RenderText_Blended(font, "Score", colorTextScore);
@@ -102,7 +102,7 @@ void draw(){
     positionHowTo.y = 610;
     textHowTo = TTF_RenderText_Blended(font, "Shortcuts: Q [Quit], R [Restart] and directionnal arrows.", colorTitle);
     SDL_BlitSurface(textHowTo, NULL, screen, &positionHowTo);
-    font = TTF_OpenFont("font.ttf", 30);
+    font = TTF_OpenFont("../font/font.ttf", 30);
 
     while(continueToPlay){
         for(int i=0; i<GRID_SIDE; i++){
