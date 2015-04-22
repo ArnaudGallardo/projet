@@ -15,8 +15,5 @@ display.o: display.c display.h grid.h grid_utilities.h
 clean:
 	rm -f display display.o
 
-run-sdl: display
-	./display
-
 install:
-	mv display ../../bin/.
+	mv display ../../bin/sdl
