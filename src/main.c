@@ -3,6 +3,7 @@
 #include <math.h>
 #include <time.h>
 #include <grid.h>
+#include <strategy.h>
 
 
 WINDOW *create_newwin(int height, int width, int starty, int startx);
