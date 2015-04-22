@@ -14,7 +14,7 @@
 \maketitle
 \tableofcontents
 \textcolor{red}{\section{Présention du jeu 2048}}
-Le but du jeu est de fusionner des nombres ensemble (puissances de deux) afin d'atteindre le nombre ultime '2048' et gagner la partie.
+Le but du jeu est de fusionner des nombres ensemble (puissance de deux) afin d'atteindre le nombre ultime '2048' et de gagner la partie.
 
 L'aire du jeu 2048 est une grille de quatre lignes par quatre colonnes avec donc 16 cellules carrées. Chaque cellule peut être vide ou contenir un nombre. Au début du jeu, il y a deux carrés (également appelés « tuiles ») avec un chiffre '2' ou un '4' suivant votre chance à l'intérieur.
 Lorsque vous parvenez à faire entrer en collision 2 briques avec le même numéro dedans, elles fusionnent en une seule nouvelle brique dont le numéro sera l'addition des deux nombres précédents : 2+2=4, 4+4=8, ... 1024+1024=2048 !
@@ -24,20 +24,20 @@ Ici on utilisera simplement les quatres flèches directionnelles du clavier pour
 \textcolor{red}{\section{Implémentation de la grille}}
 \subsection{Fonctions simples}
 \subsubsection{Valeur d'une tuile}
-On donne les coordonnées et la grille afin de directement retourner la valeur de la tuile situé dans cette grille et à ces coordonnée.
+On donne les coordonnées et la grille afin de directement retourner la valeur de la tuile située dans cette grille et à ces coordonnées.
 \subsubsection{Initialiser une tuile}
-On donne les coordonnées et la grille afin de directement modifié la valeur de la tuile situé dans cette grille et à ces coordonnées.
+On donne les coordonnées et la grille afin de directement modifier la valeur de la tuile située dans cette grille et à ces coordonnées.
 \subsubsection{Valeur du score}
-On donne la grille et la valeur du pointeur du score de la grille est retourner.
+On donne la grille et la valeur du pointeur du score de la grille est retournée.
 \subsection{Structure}
 
 Nous avons choisis d'implémenter la grille par un pointeur de pointeur d'entier pour la grille et d'un entier représentant le score.
 
-Le pointeur nous sert à crée un tableau deux dimension qui servira de grille, nous avons choisis la solution du pointeur car elle permet de facilement étendre notre grille a une taille supérieure a quatre.
+Le pointeur nous sert à créer un tableau deux dimensions qui servira de grille, nous avons choisit la solution du pointeur car elle permet de facilement étendre notre grille a une taille supérieure à quatre.
 
-Le tableau deux dimensions quand a lui nous semblait la solution la plus naturelle pour crée une grille.
+Le tableau deux dimensions quant a lui nous semblait la solution la plus naturelle pour créer une grille.
 
-C'est pourquoi nous n'avons pas implémenter la grille avec un tableau une dimension.
+C'est pourquoi nous n'avons pas implémenté la grille avec un tableau une dimension.
 
 
 \subsection{Instanciation d'une grille}

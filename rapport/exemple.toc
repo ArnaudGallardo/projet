@@ -1,20 +1,28 @@
 \select@language {french}
-\contentsline {section}{\numberline {1}Pr\IeC {\'e}sention du jeu 2048}{1}
-\contentsline {section}{\numberline {2}Impl\IeC {\'e}mentation de la grille}{1}
-\contentsline {subsection}{\numberline {2.1}Fonctions simples}{1}
-\contentsline {subsubsection}{\numberline {2.1.1}Valeur d'une tuile}{1}
-\contentsline {subsubsection}{\numberline {2.1.2}Initialiser une tuile}{1}
+\contentsline {section}{\numberline {1}Pr\IeC {\'e}sention du jeu 2048}{2}
+\contentsline {section}{\numberline {2}Impl\IeC {\'e}mentation de la grille}{2}
+\contentsline {subsection}{\numberline {2.1}Fonctions simples}{2}
+\contentsline {subsubsection}{\numberline {2.1.1}Valeur d'une tuile}{2}
+\contentsline {subsubsection}{\numberline {2.1.2}Initialiser une tuile}{2}
 \contentsline {subsubsection}{\numberline {2.1.3}Valeur du score}{2}
 \contentsline {subsection}{\numberline {2.2}Structure}{2}
-\contentsline {subsection}{\numberline {2.3}Instanciation d'une grille}{2}
-\contentsline {subsection}{\numberline {2.4}Suppression d'une grille}{2}
-\contentsline {subsection}{\numberline {2.5}Copie d'une grille}{2}
-\contentsline {subsection}{\numberline {2.6}Mouvement de la grille}{2}
-\contentsline {subsubsection}{\numberline {2.6.1}Possibilit\IeC {\'e} de mouvement}{2}
+\contentsline {subsection}{\numberline {2.3}Instanciation d'une grille}{3}
+\contentsline {subsection}{\numberline {2.4}Suppression d'une grille}{3}
+\contentsline {subsection}{\numberline {2.5}Copie d'une grille}{3}
+\contentsline {subsection}{\numberline {2.6}Mouvement de la grille}{3}
+\contentsline {subsubsection}{\numberline {2.6.1}Possibilit\IeC {\'e} de mouvement}{3}
 \contentsline {subsubsection}{\numberline {2.6.2}Mouvement}{3}
-\contentsline {subsection}{\numberline {2.7}Ajout d'une tuile}{3}
-\contentsline {subsection}{\numberline {2.8}Jouer un coup}{3}
-\contentsline {subsection}{\numberline {2.9}Fin du jeu}{3}
-\contentsline {section}{\numberline {3}Test sur grid.c}{3}
+\contentsline {subsection}{\numberline {2.7}Ajout d'une tuile}{4}
+\contentsline {subsection}{\numberline {2.8}Jouer un coup}{4}
+\contentsline {subsection}{\numberline {2.9}Fin du jeu}{4}
+\contentsline {section}{\numberline {3}Test sur grid.c}{4}
 \contentsline {subsection}{\numberline {3.1}Fonctions g\IeC {\'e}n\IeC {\'e}rales}{4}
-\contentsline {subsection}{\numberline {3.2}Fonction perso}{4}
+\contentsline {subsection}{\numberline {3.2}Fonction perso}{5}
+\contentsline {section}{\numberline {4}Strat\IeC {\'e}gie pour automatiser la r\IeC {\'e}solution du jeu}{5}
+\contentsline {subsection}{\numberline {4.1}Strat\IeC {\'e}gie rapide (Moins de dix secondes de temps de calcul)}{6}
+\contentsline {subsection}{\numberline {4.2}Strat\IeC {\'e}gie lente (Moins de deux minutes de temps de calcul)}{6}
+\contentsline {section}{\numberline {5}G\IeC {\'e}n\IeC {\'e}ralit\IeC {\'e}}{8}
+\contentsline {subsection}{\numberline {5.1}Soucis rencontr\IeC {\'e}s}{8}
+\contentsline {subsection}{\numberline {5.2}Am\IeC {\'e}liorations possibles}{8}
+\contentsline {subsection}{\numberline {5.3}R\IeC {\'e}partition du travail}{9}
+\contentsline {subsection}{\numberline {5.4}Outils utilis\IeC {\'e}s}{9}
