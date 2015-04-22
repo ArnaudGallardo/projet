@@ -7,6 +7,7 @@
 #include <SDL/SDL.h>
 #include <SDL/SDL_ttf.h>
 #include <strategy.h>
+#include <time.h>
 
 bool continueToPlay = true;
 void eventHappens(grid g);
@@ -162,6 +163,7 @@ int main(int argc, char** argv){
         fprintf(stdout,"Fail starting the SDL... (%s)\n",SDL_GetError());
         return -1;
     }
+    srand(time(NULL));
     draw();
     return EXIT_SUCCESS ;   
 }
